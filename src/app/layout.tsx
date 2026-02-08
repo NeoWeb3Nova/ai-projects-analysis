@@ -1,9 +1,19 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Outfit, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 
-const inter = Inter({ subsets: ["latin"] });
+const outfit = Outfit({
+    subsets: ["latin"],
+    variable: '--font-outfit',
+    display: 'swap',
+});
+
+const dmSans = DM_Sans({
+    subsets: ["latin"],
+    variable: '--font-dm-sans',
+    display: 'swap',
+});
 
 export const metadata: Metadata = {
     title: "AI案例拆解 - 理解AI项目的变现路径",
@@ -16,10 +26,10 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="zh-CN">
-            <body className={`${inter.className} bg-background font-body text-foreground min-h-screen selection:bg-primary/30`}>
+        <html lang="zh-CN" className={`${outfit.variable} ${dmSans.variable}`}>
+            <body className="bg-background font-sans text-foreground min-h-screen selection:bg-primary/30">
                 <Navbar />
-                <main className="pt-24">{children}</main>
+                <main className="">{children}</main>
             </body>
         </html>
     );

@@ -1,9 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { Bookmark, Share2 } from 'lucide-react';
+import { Heart, Maximize2, Folder } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import type { CaseStudy } from '@/types';
 
 interface CaseCardProps {
@@ -11,82 +11,75 @@ interface CaseCardProps {
 }
 
 export function CaseCard({ caseStudy }: CaseCardProps) {
-    const { slug, title, summary, category, monetization, stage, publishedAt, tags } = caseStudy;
+    const { slug, title, category, monetization, publishedAt } = caseStudy;
+
+    // Generate a consistent gradient or color based on the title or slug for placeholder
+    const gradients = [
+        "from-pink-500 to-rose-500",
+        "from-purple-500 to-indigo-500",
+        "from-blue-400 to-cyan-400",
+        "from-emerald-400 to-teal-500",
+        "from-orange-400 to-amber-500"
+    ];
+    const gradientIndex = slug.length % gradients.length;
+    const bgGradient = gradients[gradientIndex];
 
     return (
-        <article className="group relative h-full flex flex-col bg-secondary/30 backdrop-blur-sm rounded-2xl border border-white/5 overflow-hidden transition-all duration-500 hover:shadow-[0_0_30px_rgba(124,58,237,0.15)] hover:border-primary/50 hover:-translate-y-2">
-            {/* Clickable Overlay */}
-            <Link href={`/cases/${slug}`} className="absolute inset-0 z-10">
-                <span className="sr-only">查看 {title}</span>
-            </Link>
-
-            {/* Cover Placeholder */}
-            <div className="aspect-video bg-gradient-to-br from-gray-900 to-black mb-4 flex items-center justify-center p-6 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="absolute -inset-1 bg-gradient-to-r from-primary to-cyan-500 rounded-full blur-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500" />
-
-                <div className="w-16 h-16 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center shadow-2xl relative z-10 group-hover:scale-110 transition-transform duration-500">
-                    <span className="text-primary font-heading font-bold text-2xl drop-shadow-[0_0_5px_rgba(124,58,237,0.5)]">AI</span>
-                </div>
-            </div>
-
-            <div className="flex flex-col flex-grow p-5 pt-0">
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                    <Badge variant="outline" className="font-medium px-2.5 py-0.5 text-xs text-primary border-primary/20 bg-primary/5">
-                        {category}
-                    </Badge>
-                    <Badge variant="outline" className="font-medium px-2.5 py-0.5 text-xs text-emerald-400 border-emerald-500/20 bg-emerald-500/5">
-                        {monetization}
-                    </Badge>
+        <div className="group flex flex-col gap-2">
+            {/* Shot Card - Image Area */}
+            <div className="shot-card aspect-[4/3] group relative">
+                {/* Image Placeholder (Replace with actual image if available) */}
+                <div className={`w-full h-full bg-gradient-to-br ${bgGradient} flex items-center justify-center`}>
+                    <span className="text-white/20 font-heading font-bold text-4xl select-none">Aa</span>
                 </div>
 
-                {/* Title */}
-                <h3 className="font-heading font-bold text-xl text-foreground mb-3 line-clamp-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-cyan-400 transition-all duration-300">
-                    {title}
-                </h3>
+                {/* Overlay */}
+                <Link href={`/cases/${slug}`} className="absolute inset-0 z-10" aria-label={`View ${title}`}>
+                    <span className="sr-only">View {title}</span>
+                </Link>
 
-                {/* Summary */}
-                <p className="text-sm text-muted-foreground mb-6 line-clamp-3 flex-grow leading-relaxed group-hover:text-gray-300 transition-colors">
-                    {summary}
-                </p>
-
-                {/* Footer */}
-                <div className="flex items-center justify-between pt-4 border-t border-white/5 mt-auto">
-                    <span className="text-xs text-muted-foreground font-medium flex items-center gap-1">
-                        <span className="w-1 h-1 rounded-full bg-primary/50"></span>
-                        {new Date(publishedAt).toLocaleDateString('zh-CN')}
-                    </span>
-                    <div className="flex items-center gap-2 relative z-20">
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors rounded-full"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                // TODO: Implement bookmark
-                            }}
-                        >
-                            <Bookmark className="w-4 h-4" />
-                            <span className="sr-only">收藏</span>
-                        </Button>
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 text-muted-foreground hover:text-cyan-400 hover:bg-cyan-400/10 transition-colors rounded-full"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                // TODO: Implement share
-                            }}
-                        >
-                            <Share2 className="w-4 h-4" />
-                            <span className="sr-only">分享</span>
-                        </Button>
+                <div className="shot-overlay">
+                    <div className="flex justify-between items-end w-full translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                        <div className="text-white font-medium truncate pr-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+                            {title}
+                        </div>
+                        <div className="flex gap-2 relative z-20">
+                            <button className="h-8 w-8 bg-white text-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors shadow-sm" aria-label="Save">
+                                <Folder className="w-4 h-4" />
+                            </button>
+                            <button className="h-8 w-8 bg-white text-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors shadow-sm" aria-label="Like">
+                                <Heart className="w-4 h-4" />
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </article>
+
+            {/* Meta Footer */}
+            <div className="flex items-center justify-between px-1">
+                <div className="flex items-center gap-2 min-w-0">
+                    <Avatar className="h-6 w-6">
+                        <AvatarImage src={`https://api.dicebear.com/9.x/notionists/svg?seed=${slug}`} />
+                        <AvatarFallback>AI</AvatarFallback>
+                    </Avatar>
+                    <span className="text-sm font-medium text-foreground truncate group-hover:text-primary transition-colors">
+                        {title}
+                    </span>
+                    <Badge variant="secondary" className="hidden sm:inline-flex text-[10px] h-5 px-1.5 font-normal bg-secondary text-secondary-foreground hover:bg-secondary/80">
+                        {category}
+                    </Badge>
+                </div>
+                <div className="flex items-center gap-3 text-xs text-muted-foreground font-medium">
+                    <div className="flex items-center gap-1 hover:text-foreground transition-colors cursor-pointer">
+                        <Heart className="w-3.5 h-3.5 fill-current opacity-60" />
+                        <span>{10 + (slug.length * 2)}</span>
+                    </div>
+                    <div className="flex items-center gap-1 hover:text-foreground transition-colors cursor-pointer">
+                        <Maximize2 className="w-3.5 h-3.5 opacity-60" />
+                        <span>{100 + (slug.length * 15)}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 }

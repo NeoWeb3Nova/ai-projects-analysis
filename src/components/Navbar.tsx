@@ -3,11 +3,20 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { BookOpen, Bookmark, FileText, MessageSquare, Menu, X, LogOut, User } from 'lucide-react';
+import { Menu, X, Search, Bell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Session } from '@supabase/supabase-js';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 export function Navbar() {
     const pathname = usePathname();
@@ -36,140 +45,137 @@ export function Navbar() {
     };
 
     const navItems = [
-        { href: '/', label: '首页', icon: BookOpen },
-        { href: '/cases', label: '案例', icon: FileText },
-        { href: '/bookmarks', label: '收藏', icon: Bookmark },
-        { href: '/consulting', label: '咨询', icon: MessageSquare },
+        { href: '/cases', label: '案例拆解' },
+        { href: '/consulting', label: '咨询服务' },
+        { href: '/pro', label: 'Pro会员' },
     ];
 
     return (
-        <>
-            <nav className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
-                <div className="w-full max-w-5xl glass rounded-full px-6 py-3 transition-all duration-300 hover:bg-black/60">
-                    <div className="flex items-center justify-between">
-                        <Link href="/" className="flex items-center gap-3 group">
-                            <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center border border-primary/20 group-hover:border-primary/50 group-hover:bg-primary/30 transition-all duration-300">
-                                <span className="text-primary-foreground font-heading font-bold text-sm group-hover:scale-110 transition-transform">AI</span>
-                            </div>
-                            <span className="font-heading font-semibold text-lg text-foreground tracking-tight group-hover:text-primary transition-colors">
-                                案例拆解
-                            </span>
-                        </Link>
+        <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
+            <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+                {/* Left Side: Logo & Nav */}
+                <div className="flex items-center gap-8">
+                    <Link href="/" className="font-heading font-bold text-xl tracking-tight hover:opacity-80 transition-opacity">
+                        AI案例拆解
+                    </Link>
 
-                        {/* Desktop Nav */}
-                        <div className="hidden md:flex items-center gap-1">
-                            {navItems.map(item => {
-                                const Icon = item.icon;
-                                const isActive = pathname === item.href;
-                                return (
-                                    <Link
-                                        key={item.href}
-                                        href={item.href}
-                                        className={cn(
-                                            'px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2',
-                                            isActive
-                                                ? 'bg-primary/10 text-primary shadow-[0_0_10px_rgba(124,58,237,0.2)]'
-                                                : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
-                                        )}
-                                    >
-                                        <Icon className="w-4 h-4" />
-                                        {item.label}
-                                    </Link>
-                                );
-                            })}
-                        </div>
-
-                        <div className="hidden md:flex items-center gap-4 pl-4 border-l border-white/10">
-                            {session ? (
-                                <div className="flex items-center gap-4">
-                                    <div className="flex items-center gap-2 px-3 py-1.5 bg-white/5 rounded-full border border-white/10">
-                                        <User className="w-4 h-4 text-muted-foreground" />
-                                        <span className="text-xs font-medium text-foreground max-w-[100px] truncate">
-                                            {session.user.user_metadata.full_name || session.user.email}
-                                        </span>
-                                    </div>
-                                    <Button
-                                        variant="ghost"
-                                        size="sm"
-                                        onClick={handleLogout}
-                                        className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-full"
-                                    >
-                                        <LogOut className="w-4 h-4" />
-                                    </Button>
-                                </div>
-                            ) : (
-                                <Link href="/auth/login">
-                                    <Button size="sm" className="rounded-full bg-primary hover:bg-primary/90 shadow-[0_0_15px_rgba(124,58,237,0.4)] transition-all hover:scale-105">
-                                        登录
-                                    </Button>
-                                </Link>
-                            )}
-                        </div>
-
-                        {/* Mobile Menu Button */}
-                        <button
-                            className="md:hidden p-2 hover:bg-white/10 rounded-full transition-colors"
-                            onClick={() => setMobileOpen(!mobileOpen)}
-                        >
-                            {mobileOpen ? (
-                                <X className="w-6 h-6 text-foreground" />
-                            ) : (
-                                <Menu className="w-6 h-6 text-foreground" />
-                            )}
-                        </button>
+                    <div className="hidden md:flex items-center gap-6">
+                        {navItems.map(item => (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                className={cn(
+                                    'text-sm font-medium transition-colors hover:text-foreground',
+                                    pathname === item.href ? 'text-foreground' : 'text-muted-foreground'
+                                )}
+                            >
+                                {item.label}
+                            </Link>
+                        ))}
                     </div>
                 </div>
-            </nav>
+
+                {/* Right Side: Search & Auth */}
+                <div className="flex items-center gap-4">
+                    <div className="hidden md:flex items-center relative group">
+                        <Search className="w-4 h-4 text-muted-foreground absolute left-3" />
+                        <input
+                            type="text"
+                            placeholder="搜索案例..."
+                            className="h-10 pl-9 pr-4 rounded-full bg-secondary/50 border-none text-sm w-48 focus:w-64 focus:ring-2 focus:ring-primary/20 focus:bg-background transition-all"
+                        />
+                    </div>
+
+                    {session ? (
+                        <div className="flex items-center gap-3">
+                            <Button variant="ghost" size="icon" className="hidden sm:flex rounded-full">
+                                <Bell className="w-5 h-5 text-muted-foreground" />
+                            </Button>
+
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                    <Avatar className="h-9 w-9 cursor-pointer border border-border">
+                                        <AvatarImage src={session.user.user_metadata.avatar_url} />
+                                        <AvatarFallback>{session.user.email?.slice(0, 2).toUpperCase()}</AvatarFallback>
+                                    </Avatar>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end" className="w-56">
+                                    <DropdownMenuLabel>我的账户</DropdownMenuLabel>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem onClick={() => router.push('/profile')}>
+                                        个人中心
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem onClick={() => router.push('/bookmarks')}>
+                                        我的收藏
+                                    </DropdownMenuItem>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:text-destructive">
+                                        退出登录
+                                    </DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+
+                            <Button className="hidden sm:flex rounded-full px-6 font-medium" size="sm">
+                                发布
+                            </Button>
+                        </div>
+                    ) : (
+                        <div className="flex items-center gap-3">
+                            <Link href="/auth/login" className="hidden sm:block text-sm font-medium text-foreground hover:text-primary transition-colors">
+                                登录
+                            </Link>
+                            <Link href="/auth/register">
+                                <Button className="rounded-full px-6 font-medium" size="sm">
+                                    注册
+                                </Button>
+                            </Link>
+                        </div>
+                    )}
+
+                    {/* Mobile Menu Toggle */}
+                    <button
+                        className="md:hidden p-2 text-foreground"
+                        onClick={() => setMobileOpen(!mobileOpen)}
+                    >
+                        {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                    </button>
+                </div>
+            </div>
 
             {/* Mobile Menu */}
             {mobileOpen && (
-                <div className="fixed inset-0 z-40 bg-background/95 backdrop-blur-sm pt-24 px-6">
-                    <div className="flex flex-col gap-4">
-                        {navItems.map(item => {
-                            const Icon = item.icon;
-                            return (
-                                <Link
-                                    key={item.href}
-                                    href={item.href}
-                                    onClick={() => setMobileOpen(false)}
-                                    className="flex items-center gap-3 p-4 rounded-xl hover:bg-accent transition-colors"
-                                >
-                                    <Icon className="w-5 h-5 text-primary" />
-                                    <span className="font-medium text-foreground">{item.label}</span>
-                                </Link>
-                            );
-                        })}
-
-                        {session ? (
-                            <div className="flex flex-col gap-3 pt-4 border-t border-border">
-                                <div className="flex items-center gap-3 px-4 py-3 bg-secondary rounded-xl">
-                                    <User className="w-5 h-5 text-primary" />
-                                    <span className="font-medium text-foreground">
-                                        {session.user.user_metadata.full_name || session.user.email}
-                                    </span>
-                                </div>
-                                <Button
-                                    variant="outline"
-                                    className="w-full text-destructive border-border hover:bg-destructive/10"
-                                    onClick={() => {
-                                        handleLogout();
-                                        setMobileOpen(false);
-                                    }}
-                                >
-                                    退出登录
-                                </Button>
-                            </div>
-                        ) : (
-                            <Link href="/auth/login" className="w-full" onClick={() => setMobileOpen(false)}>
-                                <Button className="w-full py-6 text-base">
-                                    登录
-                                </Button>
-                            </Link>
-                        )}
+                <div className="md:hidden absolute top-16 left-0 right-0 bg-background border-b border-border p-4 flex flex-col gap-4 shadow-xl animate-in slide-in-from-top-2">
+                    {navItems.map(item => (
+                        <Link
+                            key={item.href}
+                            href={item.href}
+                            onClick={() => setMobileOpen(false)}
+                            className="text-base font-medium p-2 hover:bg-secondary rounded-md"
+                        >
+                            {item.label}
+                        </Link>
+                    ))}
+                    <div className="relative">
+                        <Search className="w-4 h-4 text-muted-foreground absolute left-3 top-3" />
+                        <input
+                            type="text"
+                            placeholder="搜索..."
+                            className="h-10 pl-9 pr-4 rounded-md bg-secondary border-none text-sm w-full"
+                        />
                     </div>
+                    {!session && (
+                        <div className="flex flex-col gap-2 mt-2">
+                            <Link href="/auth/login" onClick={() => setMobileOpen(false)}>
+                                <Button variant="outline" className="w-full justify-start">登录</Button>
+                            </Link>
+                            <Link href="/auth/register" onClick={() => setMobileOpen(false)}>
+                                <Button className="w-full justify-start">注册</Button>
+                            </Link>
+                        </div>
+                    )}
                 </div>
             )}
-        </>
+        </nav>
     );
 }
 

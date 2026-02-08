@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,55 +6,84 @@
 
 @layer base {
   :root {
-    /* Deep Dark Theme by Default */
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+    /* Dribbble Light Theme (Default) */
+    --background: 0 0% 100%;
+    /* White */
+    --foreground: 240 10% 3.9%;
+    /* Dark Text */
 
-    --card: 240 10% 5%;
-    /* Slightly lighter than bg */
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
 
-    --popover: 240 10% 5%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
 
-    --primary: 263 70% 55%;
-    /* Vivid Purple */
-    --primary-foreground: 210 40% 98%;
+    /* Dribbble Brand Colors */
+    --primary: 339 81% 60%;
+    /* #ea4c89 Dribbble Pink */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 240 6% 15%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 240 4.8% 95.9%;
+    /* Light Gray for secondary buttons */
+    --secondary-foreground: 240 5.9% 10%;
 
-    --muted: 240 4% 16%;
-    --muted-foreground: 240 5% 65%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
 
-    --accent: 263 70% 55%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 339 81% 95%;
+    /* Very light pink/hover state */
+    --accent-foreground: 339 81% 60%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 240 4% 16%;
-    --input: 240 4% 16%;
-    --ring: 263 70% 55%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 339 81% 60%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
+    /* 8px - slightly less rounded than before */
 
-    --chart-1: 263 70% 50%;
-    --chart-2: 190 90% 50%;
-    --chart-3: 330 80% 60%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 160 60% 45%;
-
-    --neon-blue: 190 100% 50%;
-    --neon-purple: 270 100% 60%;
-    --neon-pink: 330 100% 60%;
+    /* Chart colors tailored for light mode */
+    --chart-1: 339 81% 60%;
+    --chart-2: 270 50% 40%;
+    --chart-3: 190 90% 40%;
+    --chart-4: 45 90% 50%;
+    --chart-5: 160 60% 40%;
   }
 
-  /* Keep dark class same as root for now to ensure consistency if toggled */
   .dark {
-    --background: 240 10% 3.9%;
+    /* Dribbble Dark Mode */
+    --background: 240 10% 6%;
+    /* #0d0c22 Very Dark Blue/Gray */
     --foreground: 0 0% 98%;
-    /* ... replicate if needed, but root covers it for default dark */
+
+    --card: 240 10% 10%;
+    /* Slightly lighter dark */
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 10% 6%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 339 81% 60%;
+    /* Pink stays */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 6% 15%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 6% 15%;
+    --muted-foreground: 240 5% 65%;
+
+    --accent: 240 6% 15%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 6% 20%;
+    --input: 240 6% 20%;
+    --ring: 339 81% 60%;
   }
 }
 
@@ -64,7 +93,9 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased selection:bg-primary/30 selection:text-primary-foreground;
+    @apply bg-background text-foreground antialiased font-sans;
+    /* Font family fallback handling is typically done in tailwind.config.js, 
+       but we can hint it here or ensure standard fonts are loaded */
   }
 
   h1,
@@ -73,41 +104,27 @@
   h4,
   h5,
   h6 {
-    @apply font-heading tracking-tight;
+    @apply font-heading tracking-tight text-foreground;
   }
 }
 
 @layer utilities {
+
+  /* Dribbble-style Shot Card Utils */
+  .shot-card {
+    @apply relative overflow-hidden rounded-lg bg-card transition-all duration-300;
+    /* Aspect ratio 4:3 is standard for shots, handled in component via aspect-[4/3] */
+  }
+
+  .shot-overlay {
+    @apply absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 transition-opacity duration-200 flex flex-col justify-end p-4;
+  }
+
+  .shot-card:hover .shot-overlay {
+    @apply opacity-100;
+  }
+
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400;
-  }
-
-  .text-gradient-purple {
-    @apply bg-clip-text text-transparent bg-gradient-to-br from-purple-400 to-pink-600;
-  }
-
-  .bg-gradient-mesh {
-    background-color: hsla(240, 10%, 4%, 1);
-    background-image:
-      radial-gradient(at 0% 0%, hsla(263, 70%, 50%, 0.15) 0px, transparent 50%),
-      radial-gradient(at 100% 0%, hsla(190, 90%, 50%, 0.15) 0px, transparent 50%),
-      radial-gradient(at 100% 100%, hsla(330, 80%, 60%, 0.15) 0px, transparent 50%),
-      radial-gradient(at 0% 100%, hsla(280, 65%, 60%, 0.15) 0px, transparent 50%);
-  }
-
-  .glass {
-    @apply bg-black/40 backdrop-blur-md border border-white/10 shadow-xl;
-  }
-
-  .glass-card {
-    @apply bg-card/60 backdrop-blur-xl border border-white/5 shadow-2xl;
-  }
-
-  .glow-hover {
-    @apply transition-all duration-300 hover:shadow-[0_0_20px_rgba(124, 58, 237, 0.3)] hover:border-primary/50;
-  }
-
-  .glow-text {
-    @apply drop-shadow-[0_0_10px_rgba(255, 255, 255, 0.5)];
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500;
   }
 }
