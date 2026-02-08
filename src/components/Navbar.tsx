@@ -51,9 +51,11 @@ export function Navbar() {
                                     </Link>
                                 );
                             })}
-                            <Button size="sm" className="bg-blue-700 hover:bg-blue-800">
-                                登录
-                            </Button>
+                            <Link href="/auth/login">
+                                <Button size="sm" className="bg-blue-700 hover:bg-blue-800">
+                                    登录
+                                </Button>
+                            </Link>
                         </div>
 
                         {/* Mobile Menu Button */}
@@ -89,9 +91,11 @@ export function Navbar() {
                                 </Link>
                             );
                         })}
-                        <Button className="w-full bg-blue-700 hover:bg-blue-800">
-                            登录
-                        </Button>
+                        <Link href="/auth/login" className="w-full">
+                            <Button className="w-full bg-blue-700 hover:bg-blue-800">
+                                登录
+                            </Button>
+                        </Link>
                     </div>
                 </div>
             )}

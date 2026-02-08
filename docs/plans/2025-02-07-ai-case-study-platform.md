@@ -12,7 +12,7 @@
 
 ## Phase 1: Project Setup
 
-### Task 1: Initialize Next.js Project
+### Task 1: [x] Initialize Next.js Project
 
 **Files:**
 - Create: `package.json`, `tsconfig.json`, `next.config.mjs`, `tailwind.config.ts`
@@ -51,7 +51,7 @@ git commit -m "feat: initialize Next.js project with shadcn/ui"
 
 ---
 
-### Task 2: Configure Project Structure
+### Task 2: [x] Configure Project Structure
 
 **Files:**
 - Create: `src/lib/supabase.ts`, `src/lib/utils.ts`, `src/types/index.ts`
@@ -171,7 +171,7 @@ git commit -m "feat: configure project structure and utilities"
 
 ---
 
-### Task 3: Create Environment Variables Template
+### Task 3: [x] Create Environment Variables Template
 
 **Files:**
 - Create: `.env.local.example`, `.env.local`
@@ -203,7 +203,7 @@ git commit -m "feat: add environment variables template"
 
 ## Phase 2: Content Management
 
-### Task 4: Create Content Directory Structure
+### Task 4: [x] Create Content Directory Structure
 
 **Files:**
 - Create: `content/cases/.gitkeep`, `content/cases/ai-customer-service-50k.md`
@@ -254,13 +254,13 @@ cover: "/images/cases/ai-customer-service.jpg"
 
 ## 关键数据
 
-| 指标 | 数值 |
-|------|------|
+| 指标     | 数值    |
+| -------- | ------- |
 | 上线时间 | 2024-03 |
-| 月活用户 | 12,000 |
-| 月收入 | ¥50,000 |
-| 获客成本 | ¥80/人 |
-| 复购率 | 85% |
+| 月活用户 | 12,000  |
+| 月收入   | ¥50,000 |
+| 获客成本 | ¥80/人  |
+| 复购率   | 85%     |
 
 ## 核心启发
 
@@ -311,12 +311,12 @@ cover: "/images/cases/ai-writer.jpg"
 
 ## 关键数据
 
-| 指标 | 数值 |
-|------|------|
-| 月活用户 | 8,000 |
-| 月收入 | ¥80,000 |
-| 付费转化率 | 15% |
-| 用户留存率 | 60% |
+| 指标       | 数值    |
+| ---------- | ------- |
+| 月活用户   | 8,000   |
+| 月收入     | ¥80,000 |
+| 付费转化率 | 15%     |
+| 用户留存率 | 60%     |
 
 ## 核心启发
 
@@ -364,11 +364,11 @@ API调用计费：
 
 ## 关键数据
 
-| 指标 | 数值 |
-|------|------|
-| 企业客户 | 25家 |
-| 月收入 | ¥120,000 |
-| 客单价 | ¥12,000/月 |
+| 指标      | 数值       |
+| --------- | ---------- |
+| 企业客户  | 25家       |
+| 月收入    | ¥120,000   |
+| 客单价    | ¥12,000/月 |
 | API调用量 | 200万次/月 |
 
 ## 核心启发
@@ -387,7 +387,7 @@ git commit -m "feat: add sample case studies"
 
 ---
 
-### Task 5: Create Content Loader
+### Task 5: [x] Create Content Loader
 
 **Files:**
 - Create: `src/lib/content.ts`
@@ -479,7 +479,7 @@ git commit -m "feat: add content loader for case studies"
 
 ---
 
-### Task 6: Create Search Index
+### Task 6: [x] Create Search Index
 
 **Files:**
 - Create: `src/lib/search.ts`
@@ -532,7 +532,7 @@ git commit -m "feat: add search index with flexsearch"
 
 ## Phase 3: Core Components
 
-### Task 7: Create Navigation Component
+### Task 7: [x] Create Navigation Component
 
 **Files:**
 - Create: `src/components/Navbar.tsx`, `src/components/MobileMenu.tsx`
@@ -648,7 +648,7 @@ git commit -m "feat: add responsive navbar component"
 
 ---
 
-### Task 8: Create Case Card Component
+### Task 8: [x] Create Case Card Component
 
 **Files:**
 - Create: `src/components/CaseCard.tsx`
@@ -752,7 +752,7 @@ git commit -m "feat: add CaseCard component"
 
 ---
 
-### Task 9: Create Badge Component Variants
+### Task 9: [x] Create Badge Component Variants
 
 **Files:**
 - Create: `src/components/ui/badge.tsx`
@@ -806,7 +806,7 @@ git commit -m "feat: add Badge component"
 
 ## Phase 4: Pages
 
-### Task 10: Create Home Page
+### Task 10: [x] Create Home Page
 
 **Files:**
 - Modify: `src/app/page.tsx`, `src/app/layout.tsx`
@@ -992,7 +992,7 @@ git commit -m "feat: create home page with hero, stats, and featured cases"
 
 ---
 
-### Task 11: Create Case List Page
+### Task 11: [x] Create Case List Page
 
 **Files:**
 - Create: `src/app/cases/page.tsx`
@@ -1196,7 +1196,7 @@ git commit -m "feat: create cases list page with search and filters"
 
 ---
 
-### Task 12: Create Case Detail Page
+### Task 12: [x] Create Case Detail Page
 
 **Files:**
 - Create: `src/app/cases/[slug]/page.tsx`
@@ -1407,9 +1407,7 @@ git commit -m "feat: create case detail page with related cases"
 
 ---
 
-### Task 13: Create Bookmarks Page
-
-**Files:**
+### Task 13: [x] Create Bookmarks Page Placeholders:
 - Create: `src/app/bookmarks/page.tsx`
 
 **Step 1: Create bookmarks page (placeholder for MVP)**
@@ -1453,7 +1451,7 @@ git commit -m "feat: create bookmarks page placeholder"
 
 ---
 
-### Task 14: Create Consulting Page
+### Task 14: [x] Create Consulting Page
 
 **Files:**
 - Create: `src/app/consulting/page.tsx`
@@ -1704,7 +1702,7 @@ git commit -m "feat: create consulting page with contact form"
 
 ## Phase 5: Testing & Deployment
 
-### Task 15: Run Development Server and Test
+### Task 15: [x] Run Development Server and Test
 
 **Files:**
 - None
@@ -1751,7 +1749,7 @@ git commit -m "test: verify all pages and functionality"
 
 ---
 
-### Task 16: Prepare for Deployment
+### Task 16: [x] Prepare for Deployment
 
 **Files:**
 - Create: `README.md`, `.gitignore`
@@ -1856,7 +1854,7 @@ git commit -m "docs: add README and update .gitignore"
 
 ---
 
-### Task 17: Final Verification
+### Task 17: [x] Final Verification
 
 **Files:**
 - None

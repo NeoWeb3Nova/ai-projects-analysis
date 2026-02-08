@@ -2,6 +2,7 @@
 
 import { Bookmark } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export default function BookmarksPage() {
     return (
@@ -17,9 +18,11 @@ export default function BookmarksPage() {
                     <p className="text-slate-600 mb-6">
                         登录后即可收藏您感兴趣的案例
                     </p>
-                    <Button className="bg-blue-700 hover:bg-blue-800">
-                        立即登录
-                    </Button>
+                    <Link href="/auth/login">
+                        <Button className="bg-blue-700 hover:bg-blue-800">
+                            立即登录
+                        </Button>
+                    </Link>
                 </div>
             </div>
         </div>
