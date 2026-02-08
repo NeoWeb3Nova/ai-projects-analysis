@@ -1,15 +1,39 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { BookOpen, Bookmark, FileText, MessageSquare, Menu, X } from 'lucide-react';
+import { BookOpen, Bookmark, FileText, MessageSquare, Menu, X, LogOut, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { supabase } from '@/lib/supabase';
+import { Session } from '@supabase/supabase-js';
 
 export function Navbar() {
     const pathname = usePathname();
+    const router = useRouter();
     const [mobileOpen, setMobileOpen] = useState(false);
+    const [session, setSession] = useState<Session | null>(null);
+
+    useEffect(() => {
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            setSession(session);
+        });
+
+        const {
+            data: { subscription },
+        } = supabase.auth.onAuthStateChange((_event, session) => {
+            setSession(session);
+        });
+
+        return () => subscription.unsubscribe();
+    }, []);
+
+    const handleLogout = async () => {
+        await supabase.auth.signOut();
+        router.push('/');
+        router.refresh();
+    };
 
     const navItems = [
         { href: '/', label: '首页', icon: BookOpen },
@@ -51,11 +75,32 @@ export function Navbar() {
                                     </Link>
                                 );
                             })}
-                            <Link href="/auth/login">
-                                <Button size="sm" className="bg-blue-700 hover:bg-blue-800">
-                                    登录
-                                </Button>
-                            </Link>
+
+                            {session ? (
+                                <div className="flex items-center gap-4">
+                                    <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 rounded-lg border border-slate-100">
+                                        <User className="w-4 h-4 text-slate-500" />
+                                        <span className="text-xs font-medium text-slate-700 max-w-[100px] truncate">
+                                            {session.user.user_metadata.full_name || session.user.email}
+                                        </span>
+                                    </div>
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={handleLogout}
+                                        className="text-slate-600 border-slate-200 hover:bg-red-50 hover:text-red-600 hover:border-red-100 transition-all"
+                                    >
+                                        <LogOut className="w-4 h-4 mr-2" />
+                                        退出
+                                    </Button>
+                                </div>
+                            ) : (
+                                <Link href="/auth/login">
+                                    <Button size="sm" className="bg-blue-700 hover:bg-blue-800">
+                                        登录
+                                    </Button>
+                                </Link>
+                            )}
                         </div>
 
                         {/* Mobile Menu Button */}
@@ -91,14 +136,37 @@ export function Navbar() {
                                 </Link>
                             );
                         })}
-                        <Link href="/auth/login" className="w-full">
-                            <Button className="w-full bg-blue-700 hover:bg-blue-800">
-                                登录
-                            </Button>
-                        </Link>
+
+                        {session ? (
+                            <div className="flex flex-col gap-3 pt-4 border-t border-slate-100">
+                                <div className="flex items-center gap-3 px-4 py-3 bg-slate-50 rounded-xl">
+                                    <User className="w-5 h-5 text-blue-700" />
+                                    <span className="font-medium text-slate-700">
+                                        {session.user.user_metadata.full_name || session.user.email}
+                                    </span>
+                                </div>
+                                <Button
+                                    variant="outline"
+                                    className="w-full text-red-600 border-red-100 bg-red-50/50"
+                                    onClick={() => {
+                                        handleLogout();
+                                        setMobileOpen(false);
+                                    }}
+                                >
+                                    退出登录
+                                </Button>
+                            </div>
+                        ) : (
+                            <Link href="/auth/login" className="w-full" onClick={() => setMobileOpen(false)}>
+                                <Button className="w-full bg-blue-700 hover:bg-blue-800 py-6 text-base">
+                                    登录
+                                </Button>
+                            </Link>
+                        )}
                     </div>
                 </div>
             )}
         </>
     );
 }
+

@@ -2,13 +2,45 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Mail, ArrowLeft, Send } from 'lucide-react';
+import { Mail, ArrowLeft, Send, Loader2, AlertTriangle } from 'lucide-react';
 
 export default function ForgotPasswordPage() {
+    const [email, setEmail] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
     const [submitted, setSubmitted] = useState(false);
+
+    const handleResetPassword = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (!isSupabaseConfigured) {
+            setError('Supabase 未配置。请检查环境变量。');
+            return;
+        }
+
+        setLoading(true);
+        setError(null);
+
+        try {
+            const { error } = await supabase.auth.resetPasswordForEmail(email, {
+                redirectTo: `${window.location.origin}/auth/login`,
+            });
+
+            if (error) {
+                setError(error.message);
+            } else {
+                setSubmitted(true);
+            }
+        } catch (err: any) {
+            setError('请求发送过程中发生错误，请稍后再试。');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="p-8 md:p-10">
@@ -40,7 +72,13 @@ export default function ForgotPasswordPage() {
                 </div>
             ) : (
                 <>
-                    <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}>
+                    <form className="space-y-6" onSubmit={handleResetPassword}>
+                        {error && (
+                            <div className="p-3 bg-red-50 border border-red-100 text-red-600 text-sm rounded-lg">
+                                {error}
+                            </div>
+                        )}
+
                         <div className="space-y-2">
                             <Label htmlFor="email">电子邮箱</Label>
                             <div className="relative">
@@ -50,13 +88,26 @@ export default function ForgotPasswordPage() {
                                     type="email"
                                     placeholder="name@example.com"
                                     className="pl-10 h-11"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                     required
                                 />
                             </div>
                         </div>
 
-                        <Button className="w-full bg-blue-700 hover:bg-blue-800 h-11 text-base font-medium transition-all active:scale-[0.98]">
-                            发送重置链接
+                        <Button
+                            type="submit"
+                            className="w-full bg-blue-700 hover:bg-blue-800 h-11 text-base font-medium transition-all active:scale-[0.98]"
+                            disabled={loading}
+                        >
+                            {loading ? (
+                                <>
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                    发送中...
+                                </>
+                            ) : (
+                                '发送重置链接'
+                            )}
                         </Button>
                     </form>
 
@@ -74,3 +125,4 @@ export default function ForgotPasswordPage() {
         </div>
     );
 }
+

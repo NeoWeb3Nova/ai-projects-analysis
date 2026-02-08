@@ -34,11 +34,12 @@
 ## 🚧 当前阶段：Phase 6 - 用户系统与权限中心
 
 ### 6.1 用户认证基础
-- [ ] 配置 Supabase Auth 环境变量
+- [ ] 配置 Supabase Auth 环境变量 (需用户提供并填入 .env.local)
 - [x] 创建 Auth 布局组件 (AuthLayout)
-- [x] 实现登录页面 (Login Page) - 邮箱/密码
-- [x] 实现注册页面 (Signup Page)
-- [x] 实现找回密码页面 (Forgot Password)
+- [x] 实现并优化登录页面 (Login Page) - 邮箱/密码 + 逻辑对接
+- [x] 实现并优化注册页面 (Signup Page) - 逻辑对接
+- [x] 实现并优化找回密码页面 (Forgot Password) - 逻辑对接
+- [x] 导航栏用户状态展示 (Avatar + Logout 逻辑)
 
 ### 6.2 用户中心实现
 - [ ] 个人资料编辑页面 (Profile Settings)
