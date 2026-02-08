@@ -1,8 +1,9 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, Bookmark, Share2, Calendar, Tag } from 'lucide-react';
+import { ArrowLeft, Heart, Share2, Folder, MoreHorizontal, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { getCaseBySlug, getAllCases } from '@/lib/content';
 
 export async function generateStaticParams() {
@@ -16,7 +17,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     if (!caseStudy) return {};
 
     return {
-        title: `${caseStudy.title} - AI案例拆解`,
+        title: `${caseStudy.title} - AI Projects Analysis`,
         description: caseStudy.summary,
     };
 }
@@ -34,113 +35,168 @@ export default async function CaseDetailPage({ params }: { params: Promise<{ slu
     // Get related cases (same category)
     const relatedCases = getAllCases()
         .filter(c => c.slug !== slug && c.category === category)
-        .slice(0, 3);
+        .slice(0, 4);
+
+    // Generate a consistent gradient based on slug for the "Shot" placeholder
+    const gradients = [
+        "from-pink-500 to-rose-500",
+        "from-purple-500 to-indigo-500",
+        "from-blue-400 to-cyan-400",
+        "from-emerald-400 to-teal-500",
+        "from-orange-400 to-amber-500"
+    ];
+    const gradientIndex = slug.length % gradients.length;
+    const bgGradient = gradients[gradientIndex];
 
     return (
-        <div className="min-h-screen pb-16">
-            <div className="max-w-4xl mx-auto px-6 py-8">
-                {/* Back Button */}
-                <Link href="/cases">
-                    <Button variant="ghost" className="mb-6">
-                        <ArrowLeft className="mr-2 w-4 h-4" />
-                        返回案例列表
-                    </Button>
-                </Link>
-
-                {/* Header */}
-                <div className="mb-8">
-                    <div className="flex flex-wrap gap-2 mb-4">
-                        <Badge className="bg-blue-100 text-blue-700 font-medium px-3 py-1">
-                            {category}
-                        </Badge>
-                        <Badge className="bg-green-100 text-green-700 font-medium px-3 py-1">
-                            {monetization}
-                        </Badge>
-                        <Badge className="bg-slate-100 text-slate-700 font-medium px-3 py-1">
-                            {stage}
-                        </Badge>
-                    </div>
-
-                    <h1 className="font-heading font-bold text-3xl md:text-4xl text-blue-900 mb-4">
-                        {title}
-                    </h1>
-
-                    <div className="flex flex-wrap items-center gap-6 text-sm text-slate-600">
-                        <div className="flex items-center gap-2">
-                            <Calendar className="w-4 h-4" />
-                            <span>{new Date(publishedAt).toLocaleDateString('zh-CN')}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <Tag className="w-4 h-4" />
-                            <div className="flex gap-2">
-                                {tags.map(tag => (
-                                    <span key={tag} className="text-blue-700">#{tag}</span>
-                                ))}
+        <div className="min-h-screen bg-background pb-20">
+            {/* Header / Nav Area for Shot */}
+            <header className="sticky top-16 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border/40">
+                <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                        <Avatar className="h-10 w-10 border border-border">
+                            <AvatarImage src={`https://api.dicebear.com/9.x/notionists/svg?seed=${slug}`} />
+                            <AvatarFallback>AI</AvatarFallback>
+                        </Avatar>
+                        <div className="flex flex-col">
+                            <h1 className="text-lg font-bold font-heading leading-tight truncate max-w-[200px] md:max-w-md">
+                                {title}
+                            </h1>
+                            <div className="text-xs text-muted-foreground flex items-center gap-1">
+                                <span>by</span>
+                                <span className="font-medium text-primary">AI Analyst</span>
+                                <span>•</span>
+                                <span className="hover:text-foreground cursor-pointer">Follow</span>
                             </div>
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-3 mt-6">
-                        <Button className="bg-blue-700 hover:bg-blue-800">
-                            <Bookmark className="mr-2 w-4 h-4" />
-                            收藏案例
+                    <div className="flex items-center gap-2">
+                        <Button variant="secondary" size="sm" className="hidden sm:flex">
+                            Save
                         </Button>
-                        <Button variant="outline">
-                            <Share2 className="mr-2 w-4 h-4" />
-                            分享
+                        <Button className="bg-primary hover:bg-primary/90 text-white" size="sm">
+                            <Heart className="w-4 h-4 mr-2 fill-current" />
+                            Like
                         </Button>
                     </div>
                 </div>
+            </header>
 
-                {/* Content */}
-                <article className="prose prose-blue max-w-none">
-                    <div dangerouslySetInnerHTML={{ __html: content?.replace(/\n/g, '<br />') || '' }} />
-                </article>
+            <div className="container mx-auto px-4 py-8 md:py-12">
+                <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-12">
 
-                {/* CTA Section */}
-                <div className="mt-12 p-8 bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl border border-blue-200">
-                    <div className="max-w-2xl mx-auto text-center">
-                        <h3 className="font-heading font-bold text-2xl text-blue-900 mb-4">
-                            需要AI项目落地咨询？
-                        </h3>
-                        <p className="text-slate-700 mb-6">
-                            我们提供专业的AI项目落地和变现咨询服务，帮助您从0到1实现AI商业化。
-                        </p>
-                        <Link href="/consulting">
-                            <Button size="lg" className="bg-blue-700 hover:bg-blue-800">
-                                立即咨询
+                    {/* Main Content (The Shot) */}
+                    <main>
+                        {/* Visual Asset */}
+                        <div className={`w-full aspect-[4/3] rounded-xl bg-gradient-to-br ${bgGradient} flex items-center justify-center mb-10 shadow-sm border border-border/50`}>
+                            <span className="text-white/30 font-heading font-bold text-6xl select-none">
+                                {title.charAt(0)}
+                            </span>
+                        </div>
+
+                        {/* Description */}
+                        <div className="prose prose-slate dark:prose-invert max-w-none">
+                            <div dangerouslySetInnerHTML={{ __html: content?.replace(/\n/g, '<br />') || '' }} />
+                        </div>
+
+                        {/* Comments Stub */}
+                        <div className="mt-16 pt-8 border-t border-border">
+                            <h3 className="font-heading font-bold text-lg mb-6">Comments</h3>
+                            <div className="bg-secondary/30 rounded-lg p-8 text-center text-muted-foreground">
+                                No comments yet. Be the first to share your thoughts!
+                            </div>
+                        </div>
+                    </main>
+
+                    {/* Sidebar */}
+                    <aside className="space-y-8">
+                        {/* Actions */}
+                        <div className="flex flex-col gap-3">
+                            <Button className="w-full justify-start" variant="secondary">
+                                <Share2 className="w-4 h-4 mr-2" />
+                                Share
                             </Button>
+                            <Button className="w-full justify-start" variant="secondary">
+                                <Folder className="w-4 h-4 mr-2" />
+                                Add to Collection
+                            </Button>
+                        </div>
+
+                        {/* Shot Details */}
+                        <div className="space-y-4">
+                            <div className="flex items-center justify-between text-sm">
+                                <span className="text-muted-foreground">Category</span>
+                                <span className="font-medium">{category}</span>
+                            </div>
+                            <div className="flex items-center justify-between text-sm">
+                                <span className="text-muted-foreground">Monetization</span>
+                                <span className="font-medium">{monetization}</span>
+                            </div>
+                            <div className="flex items-center justify-between text-sm">
+                                <span className="text-muted-foreground">Stage</span>
+                                <span className="font-medium">{stage}</span>
+                            </div>
+                            <div className="flex items-center justify-between text-sm">
+                                <span className="text-muted-foreground">Published</span>
+                                <span className="font-medium">{new Date(publishedAt).toLocaleDateString()}</span>
+                            </div>
+                        </div>
+
+                        {/* Tags */}
+                        <div>
+                            <h4 className="font-medium text-sm mb-3">Tags</h4>
+                            <div className="flex flex-wrap gap-2">
+                                {tags.map(tag => (
+                                    <Badge key={tag} variant="secondary" className="hover:bg-secondary/80 cursor-pointer font-normal text-muted-foreground">
+                                        {tag}
+                                    </Badge>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* More from Author Stub */}
+                        <div className="border-t border-border pt-6">
+                            <h4 className="font-medium text-sm mb-4">More by AI Analyst</h4>
+                            <div className="grid grid-cols-2 gap-4">
+                                {[1, 2, 3, 4].map(i => (
+                                    <div key={i} className="aspect-[4/3] bg-secondary rounded-md hover:opacity-80 transition-opacity cursor-pointer"></div>
+                                ))}
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+
+                {/* Related Shots Bottom */}
+                <section className="mt-20 pt-12 border-t border-border">
+                    <div className="flex items-center justify-between mb-8">
+                        <h3 className="font-heading font-bold text-xl">You might also like</h3>
+                        <Link href="/cases" className="text-sm font-medium text-primary hover:underline">
+                            View all
                         </Link>
                     </div>
-                </div>
-
-                {/* Related Cases */}
-                {relatedCases.length > 0 && (
-                    <div className="mt-12">
-                        <h2 className="font-heading font-bold text-2xl text-blue-900 mb-6">
-                            相关案例
-                        </h2>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            {relatedCases.map(relatedCase => (
-                                <Link
-                                    key={relatedCase.slug}
-                                    href={`/cases/${relatedCase.slug}`}
-                                    className="block bento-card cursor-pointer"
-                                >
-                                    <div className="aspect-video bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl mb-4 flex items-center justify-center">
-                                        <span className="text-blue-300 font-heading font-bold text-2xl">AI</span>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+                        {relatedCases.map((relatedCase) => (
+                            <Link
+                                key={relatedCase.slug}
+                                href={`/cases/${relatedCase.slug}`}
+                                className="group block"
+                            >
+                                <div className={`aspect-[4/3] rounded-lg bg-secondary mb-3 overflow-hidden`}>
+                                    {/* Placeholder Image */}
+                                    <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 group-hover:scale-105 transition-transform duration-500"></div>
+                                </div>
+                                <div className="flex items-center justify-between">
+                                    <span className="font-medium text-sm truncate pr-2">{relatedCase.title}</span>
+                                    <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                                        <Heart className="w-3 h-3" />
+                                        <span>24</span>
                                     </div>
-                                    <h3 className="font-heading font-semibold text-lg text-blue-900 mb-2 line-clamp-2">
-                                        {relatedCase.title}
-                                    </h3>
-                                    <p className="text-sm text-slate-600 line-clamp-2">
-                                        {relatedCase.summary}
-                                    </p>
-                                </Link>
-                            ))}
-                        </div>
+                                </div>
+                            </Link>
+                        ))}
                     </div>
-                )}
+                </section>
             </div>
         </div>
     );
