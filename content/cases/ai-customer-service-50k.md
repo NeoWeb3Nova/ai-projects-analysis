@@ -6,7 +6,7 @@ monetization: "订阅制"
 stage: "盈利中"
 publishedAt: "2025-01-15"
 tags: ["客服", "SaaS", "订阅"]
-cover: "/images/cases/ai-customer-service-50k.svg"
+cover: "/images/cases/ai-customer-service-50k.jpg"
 ---
 
 ## 项目背景

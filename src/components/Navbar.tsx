@@ -3,11 +3,12 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { Menu, X, Search, Bell } from 'lucide-react';
+import { Menu, X, Search, Bell, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Session } from '@supabase/supabase-js';
+import { useLanguage } from '@/contexts/LanguageContext';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -23,6 +24,11 @@ export function Navbar() {
     const router = useRouter();
     const [mobileOpen, setMobileOpen] = useState(false);
     const [session, setSession] = useState<Session | null>(null);
+    const { t, locale, setLocale } = useLanguage();
+
+    const toggleLanguage = () => {
+        setLocale(locale === 'zh' ? 'en' : 'zh');
+    };
 
     useEffect(() => {
         supabase.auth.getSession().then(({ data: { session } }) => {
@@ -45,9 +51,9 @@ export function Navbar() {
     };
 
     const navItems = [
-        { href: '/cases', label: '案例拆解' },
-        { href: '/consulting', label: '咨询服务' },
-        { href: '/pro', label: 'Pro会员' },
+        { href: '/cases', label: t('nav.cases') },
+        { href: '/consulting', label: t('nav.consulting') },
+        { href: '/pro', label: t('nav.pro') },
     ];
 
     return (
@@ -81,10 +87,15 @@ export function Navbar() {
                         <Search className="w-4 h-4 text-muted-foreground absolute left-3" />
                         <input
                             type="text"
-                            placeholder="搜索案例..."
+                            placeholder={t('nav.search')}
                             className="h-10 pl-9 pr-4 rounded-full bg-secondary/50 border-none text-sm w-48 focus:w-64 focus:ring-2 focus:ring-primary/20 focus:bg-background transition-all"
                         />
                     </div>
+
+                    <Button variant="ghost" size="icon" onClick={toggleLanguage} className="hidden md:flex rounded-full">
+                        <Globe className="w-5 h-5 text-muted-foreground" />
+                        <span className="sr-only">Switch Language</span>
+                    </Button>
 
                     {session ? (
                         <div className="flex items-center gap-3">
@@ -100,33 +111,33 @@ export function Navbar() {
                                     </Avatar>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end" className="w-56">
-                                    <DropdownMenuLabel>我的账户</DropdownMenuLabel>
+                                    <DropdownMenuLabel>{t('nav.account')}</DropdownMenuLabel>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem onClick={() => router.push('/profile')}>
-                                        个人中心
+                                        {t('nav.profile')}
                                     </DropdownMenuItem>
                                     <DropdownMenuItem onClick={() => router.push('/bookmarks')}>
-                                        我的收藏
+                                        {t('nav.bookmarks')}
                                     </DropdownMenuItem>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:text-destructive">
-                                        退出登录
+                                        {t('nav.logout')}
                                     </DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
 
                             <Button className="hidden sm:flex rounded-full px-6 font-medium" size="sm">
-                                发布
+                                {t('nav.publish')}
                             </Button>
                         </div>
                     ) : (
                         <div className="flex items-center gap-3">
                             <Link href="/auth/login" className="hidden sm:block text-sm font-medium text-foreground hover:text-primary transition-colors">
-                                登录
+                                {t('nav.login')}
                             </Link>
                             <Link href="/auth/register">
                                 <Button className="rounded-full px-6 font-medium" size="sm">
-                                    注册
+                                    {t('nav.register')}
                                 </Button>
                             </Link>
                         </div>
@@ -159,17 +170,21 @@ export function Navbar() {
                         <Search className="w-4 h-4 text-muted-foreground absolute left-3 top-3" />
                         <input
                             type="text"
-                            placeholder="搜索..."
+                            placeholder={t('nav.search')}
                             className="h-10 pl-9 pr-4 rounded-md bg-secondary border-none text-sm w-full"
                         />
+                        <Button variant="ghost" size="sm" onClick={toggleLanguage} className="mt-2 w-full justify-start">
+                            <Globe className="w-4 h-4 mr-2" />
+                            {locale === 'zh' ? 'English' : '中文'}
+                        </Button>
                     </div>
                     {!session && (
                         <div className="flex flex-col gap-2 mt-2">
                             <Link href="/auth/login" onClick={() => setMobileOpen(false)}>
-                                <Button variant="outline" className="w-full justify-start">登录</Button>
+                                <Button variant="outline" className="w-full justify-start">{t('nav.login')}</Button>
                             </Link>
                             <Link href="/auth/register" onClick={() => setMobileOpen(false)}>
-                                <Button className="w-full justify-start">注册</Button>
+                                <Button className="w-full justify-start">{t('nav.register')}</Button>
                             </Link>
                         </div>
                     )}

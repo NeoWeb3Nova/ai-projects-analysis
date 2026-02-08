@@ -6,7 +6,7 @@ monetization: "订阅制"
 stage: "盈利中"
 publishedAt: "2025-01-10"
 tags: ["写作", "SaaS", "内容"]
-cover: "/images/cases/ai-writer-saas.svg"
+cover: "/images/cases/ai-writer-saas.jpg"
 ---
 
 ## 项目背景

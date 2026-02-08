@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Outfit, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 
 const outfit = Outfit({
     subsets: ["latin"],
@@ -28,8 +29,10 @@ export default function RootLayout({
     return (
         <html lang="zh-CN" className={`${outfit.variable} ${dmSans.variable}`}>
             <body className="bg-background font-sans text-foreground min-h-screen selection:bg-primary/30">
-                <Navbar />
-                <main className="">{children}</main>
+                <LanguageProvider>
+                    <Navbar />
+                    <main className="">{children}</main>
+                </LanguageProvider>
             </body>
         </html>
     );

@@ -14,6 +14,10 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useLanguage } from '@/contexts/LanguageContext';
+
+const ALL_CATEGORIES = 'ALL_CATEGORIES';
+const ALL_MODELS = 'ALL_MODELS';
 
 interface CasesClientProps {
     initialCases: CaseStudy[];
@@ -22,9 +26,10 @@ interface CasesClientProps {
 }
 
 export function CasesClient({ initialCases, categories, monetizationTypes }: CasesClientProps) {
+    const { t } = useLanguage();
     const [searchQuery, setSearchQuery] = useState('');
-    const [selectedCategory, setSelectedCategory] = useState<string>('All Categories');
-    const [selectedMonetization, setSelectedMonetization] = useState<string>('All Models');
+    const [selectedCategory, setSelectedCategory] = useState<string>(ALL_CATEGORIES);
+    const [selectedMonetization, setSelectedMonetization] = useState<string>(ALL_MODELS);
     const [sortBy, setSortBy] = useState<'newest' | 'oldest'>('newest');
 
     // Filter and sort cases
@@ -42,12 +47,12 @@ export function CasesClient({ initialCases, categories, monetizationTypes }: Cas
         }
 
         // Apply category filter
-        if (selectedCategory !== 'All Categories') {
+        if (selectedCategory !== ALL_CATEGORIES) {
             cases = cases.filter(c => c.category === selectedCategory);
         }
 
         // Apply monetization filter
-        if (selectedMonetization !== 'All Models') {
+        if (selectedMonetization !== ALL_MODELS) {
             cases = cases.filter(c => c.monetization === selectedMonetization);
         }
 
@@ -63,8 +68,8 @@ export function CasesClient({ initialCases, categories, monetizationTypes }: Cas
 
     const resetFilters = () => {
         setSearchQuery('');
-        setSelectedCategory('All Categories');
-        setSelectedMonetization('All Models');
+        setSelectedCategory(ALL_CATEGORIES);
+        setSelectedMonetization(ALL_MODELS);
         setSortBy('newest');
     };
 
@@ -78,13 +83,13 @@ export function CasesClient({ initialCases, categories, monetizationTypes }: Cas
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button variant="outline" className="h-10 px-4 rounded-lg border-border bg-background hover:bg-secondary text-foreground font-medium flex items-center gap-2">
-                                    {selectedCategory}
+                                    {selectedCategory === ALL_CATEGORIES ? t('home.filters.allCategories') : selectedCategory}
                                     <ChevronDown className="w-4 h-4 opacity-50" />
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="start" className="w-48">
-                                <DropdownMenuItem onClick={() => setSelectedCategory('All Categories')}>
-                                    All Categories
+                                <DropdownMenuItem onClick={() => setSelectedCategory(ALL_CATEGORIES)}>
+                                    {t('home.filters.allCategories')}
                                 </DropdownMenuItem>
                                 {categories.map(cat => (
                                     <DropdownMenuItem key={cat} onClick={() => setSelectedCategory(cat)}>
@@ -97,13 +102,13 @@ export function CasesClient({ initialCases, categories, monetizationTypes }: Cas
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button variant="ghost" className="h-10 px-4 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary font-medium flex items-center gap-2">
-                                    {selectedMonetization}
+                                    {selectedMonetization === ALL_MODELS ? t('home.filters.allModels') : selectedMonetization}
                                     <ChevronDown className="w-4 h-4 opacity-50" />
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="start" className="w-48">
-                                <DropdownMenuItem onClick={() => setSelectedMonetization('All Models')}>
-                                    All Models
+                                <DropdownMenuItem onClick={() => setSelectedMonetization(ALL_MODELS)}>
+                                    {t('home.filters.allModels')}
                                 </DropdownMenuItem>
                                 {monetizationTypes.map(type => (
                                     <DropdownMenuItem key={type} onClick={() => setSelectedMonetization(type)}>
@@ -118,7 +123,7 @@ export function CasesClient({ initialCases, categories, monetizationTypes }: Cas
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                         <Input
                             type="text"
-                            placeholder="Search..."
+                            placeholder={t('home.filters.searchPlaceholder')}
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className="pl-9 h-10 rounded-lg bg-secondary/50 border-transparent focus:bg-background focus:border-border transition-all"
@@ -139,13 +144,13 @@ export function CasesClient({ initialCases, categories, monetizationTypes }: Cas
                             <Search className="w-8 h-8 text-muted-foreground" />
                         </div>
                         <h3 className="text-xl font-medium text-foreground mb-2">
-                            No cases found
+                            {t('home.filters.noResults')}
                         </h3>
                         <p className="text-muted-foreground mb-6">
-                            Try adjusting your search or filters to find what you're looking for.
+                            {t('home.filters.tryAdjusting')}
                         </p>
                         <Button onClick={resetFilters} variant="outline">
-                            Clear all filters
+                            {t('home.filters.clearFilters')}
                         </Button>
                     </div>
                 )}
