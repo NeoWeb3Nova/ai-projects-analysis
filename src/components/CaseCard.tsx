@@ -14,67 +14,75 @@ export function CaseCard({ caseStudy }: CaseCardProps) {
     const { slug, title, summary, category, monetization, stage, publishedAt, tags } = caseStudy;
 
     return (
-        <Link href={`/cases/${slug}`} className="block">
-            <article className="bento-card h-full flex flex-col cursor-pointer">
-                {/* Cover Placeholder */}
-                <div className="aspect-video bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl mb-4 flex items-center justify-center">
-                    <span className="text-blue-300 font-heading font-bold text-4xl">AI</span>
-                </div>
+        <article className="group relative h-full flex flex-col bg-card rounded-2xl border border-border overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+            {/* Clickable Overlay */}
+            <Link href={`/cases/${slug}`} className="absolute inset-0 z-10">
+                <span className="sr-only">查看 {title}</span>
+            </Link>
 
+            {/* Cover Placeholder */}
+            <div className="aspect-video bg-gradient-to-br from-primary/10 to-primary/5 mb-4 flex items-center justify-center p-6">
+                <div className="w-16 h-16 rounded-2xl bg-white/50 backdrop-blur shadow-sm flex items-center justify-center">
+                    <span className="text-primary font-heading font-bold text-2xl">AI</span>
+                </div>
+            </div>
+
+            <div className="flex flex-col flex-grow p-5 pt-0">
                 {/* Tags */}
                 <div className="flex flex-wrap gap-2 mb-3">
-                    <Badge className="bg-blue-100 text-blue-700 font-medium px-3 py-1 rounded-full text-xs">
+                    <Badge variant="secondary" className="font-medium px-2.5 py-0.5 text-xs text-primary bg-primary/10 hover:bg-primary/20 transition-colors pointer-events-none">
                         {category}
                     </Badge>
-                    <Badge className="bg-green-100 text-green-700 font-medium px-3 py-1 rounded-full text-xs">
+                    <Badge variant="secondary" className="font-medium px-2.5 py-0.5 text-xs text-green-700 bg-green-100 dark:text-green-300 dark:bg-green-900/30 pointer-events-none">
                         {monetization}
-                    </Badge>
-                    <Badge className="bg-slate-100 text-slate-700 font-medium px-3 py-1 rounded-full text-xs">
-                        {stage}
                     </Badge>
                 </div>
 
                 {/* Title */}
-                <h3 className="font-heading font-semibold text-lg text-blue-900 mb-2 line-clamp-2">
+                <h3 className="font-heading font-bold text-xl text-foreground mb-3 line-clamp-2 group-hover:text-primary transition-colors">
                     {title}
                 </h3>
 
                 {/* Summary */}
-                <p className="text-sm text-slate-600 mb-4 line-clamp-3 flex-grow">
+                <p className="text-sm text-muted-foreground mb-6 line-clamp-3 flex-grow leading-relaxed">
                     {summary}
                 </p>
 
                 {/* Footer */}
-                <div className="flex items-center justify-between pt-4 border-t border-slate-200">
-                    <span className="text-xs text-slate-500">
+                <div className="flex items-center justify-between pt-4 border-t border-border mt-auto">
+                    <span className="text-xs text-muted-foreground font-medium">
                         {new Date(publishedAt).toLocaleDateString('zh-CN')}
                     </span>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 relative z-20">
                         <Button
                             variant="ghost"
                             size="icon"
-                            className="h-8 w-8 hover:bg-green-50 hover:text-green-600 transition-colors"
+                            className="h-8 w-8 text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
                             onClick={(e) => {
                                 e.preventDefault();
+                                e.stopPropagation();
                                 // TODO: Implement bookmark
                             }}
                         >
                             <Bookmark className="w-4 h-4" />
+                            <span className="sr-only">收藏</span>
                         </Button>
                         <Button
                             variant="ghost"
                             size="icon"
-                            className="h-8 w-8 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                            className="h-8 w-8 text-muted-foreground hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
                             onClick={(e) => {
                                 e.preventDefault();
+                                e.stopPropagation();
                                 // TODO: Implement share
                             }}
                         >
                             <Share2 className="w-4 h-4" />
+                            <span className="sr-only">分享</span>
                         </Button>
                     </div>
                 </div>
-            </article>
-        </Link>
+            </div>
+        </article>
     );
 }

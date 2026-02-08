@@ -45,13 +45,13 @@ export function Navbar() {
     return (
         <>
             <nav className="fixed top-4 left-4 right-4 z-50">
-                <div className="max-w-7xl mx-auto bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg border border-slate-200 px-6 py-4">
+                <div className="max-w-7xl mx-auto bg-background/95 backdrop-blur-sm rounded-2xl shadow-lg border border-border px-6 py-4">
                     <div className="flex items-center justify-between">
                         <Link href="/" className="flex items-center gap-2">
-                            <div className="w-8 h-8 bg-blue-700 rounded-lg flex items-center justify-center">
-                                <span className="text-white font-bold text-sm">AI</span>
+                            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                                <span className="text-primary-foreground font-bold text-sm">AI</span>
                             </div>
-                            <span className="font-heading font-semibold text-lg text-blue-900">
+                            <span className="font-heading font-semibold text-lg text-foreground">
                                 案例拆解
                             </span>
                         </Link>
@@ -67,7 +67,7 @@ export function Navbar() {
                                         href={item.href}
                                         className={cn(
                                             'flex items-center gap-2 text-sm font-medium transition-colors',
-                                            isActive ? 'text-blue-700' : 'text-slate-600 hover:text-blue-700'
+                                            isActive ? 'text-primary' : 'text-muted-foreground hover:text-primary'
                                         )}
                                     >
                                         <Icon className="w-4 h-4" />
@@ -78,9 +78,9 @@ export function Navbar() {
 
                             {session ? (
                                 <div className="flex items-center gap-4">
-                                    <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 rounded-lg border border-slate-100">
-                                        <User className="w-4 h-4 text-slate-500" />
-                                        <span className="text-xs font-medium text-slate-700 max-w-[100px] truncate">
+                                    <div className="flex items-center gap-2 px-3 py-1.5 bg-secondary rounded-lg border border-border">
+                                        <User className="w-4 h-4 text-muted-foreground" />
+                                        <span className="text-xs font-medium text-foreground max-w-[100px] truncate">
                                             {session.user.user_metadata.full_name || session.user.email}
                                         </span>
                                     </div>
@@ -88,7 +88,7 @@ export function Navbar() {
                                         variant="outline"
                                         size="sm"
                                         onClick={handleLogout}
-                                        className="text-slate-600 border-slate-200 hover:bg-red-50 hover:text-red-600 hover:border-red-100 transition-all"
+                                        className="text-muted-foreground border-border hover:bg-destructive/10 hover:text-destructive hover:border-destructive/20 transition-all"
                                     >
                                         <LogOut className="w-4 h-4 mr-2" />
                                         退出
@@ -96,7 +96,7 @@ export function Navbar() {
                                 </div>
                             ) : (
                                 <Link href="/auth/login">
-                                    <Button size="sm" className="bg-blue-700 hover:bg-blue-800">
+                                    <Button size="sm">
                                         登录
                                     </Button>
                                 </Link>
@@ -105,13 +105,13 @@ export function Navbar() {
 
                         {/* Mobile Menu Button */}
                         <button
-                            className="md:hidden p-2 hover:bg-blue-50 rounded-lg transition-colors"
+                            className="md:hidden p-2 hover:bg-accent rounded-lg transition-colors"
                             onClick={() => setMobileOpen(!mobileOpen)}
                         >
                             {mobileOpen ? (
-                                <X className="w-6 h-6 text-slate-600" />
+                                <X className="w-6 h-6 text-foreground" />
                             ) : (
-                                <Menu className="w-6 h-6 text-slate-600" />
+                                <Menu className="w-6 h-6 text-foreground" />
                             )}
                         </button>
                     </div>
@@ -120,7 +120,7 @@ export function Navbar() {
 
             {/* Mobile Menu */}
             {mobileOpen && (
-                <div className="fixed inset-0 z-40 bg-white/95 backdrop-blur-sm pt-24 px-6">
+                <div className="fixed inset-0 z-40 bg-background/95 backdrop-blur-sm pt-24 px-6">
                     <div className="flex flex-col gap-4">
                         {navItems.map(item => {
                             const Icon = item.icon;
@@ -129,25 +129,25 @@ export function Navbar() {
                                     key={item.href}
                                     href={item.href}
                                     onClick={() => setMobileOpen(false)}
-                                    className="flex items-center gap-3 p-4 rounded-xl hover:bg-blue-50 transition-colors"
+                                    className="flex items-center gap-3 p-4 rounded-xl hover:bg-accent transition-colors"
                                 >
-                                    <Icon className="w-5 h-5 text-blue-700" />
-                                    <span className="font-medium text-slate-700">{item.label}</span>
+                                    <Icon className="w-5 h-5 text-primary" />
+                                    <span className="font-medium text-foreground">{item.label}</span>
                                 </Link>
                             );
                         })}
 
                         {session ? (
-                            <div className="flex flex-col gap-3 pt-4 border-t border-slate-100">
-                                <div className="flex items-center gap-3 px-4 py-3 bg-slate-50 rounded-xl">
-                                    <User className="w-5 h-5 text-blue-700" />
-                                    <span className="font-medium text-slate-700">
+                            <div className="flex flex-col gap-3 pt-4 border-t border-border">
+                                <div className="flex items-center gap-3 px-4 py-3 bg-secondary rounded-xl">
+                                    <User className="w-5 h-5 text-primary" />
+                                    <span className="font-medium text-foreground">
                                         {session.user.user_metadata.full_name || session.user.email}
                                     </span>
                                 </div>
                                 <Button
                                     variant="outline"
-                                    className="w-full text-red-600 border-red-100 bg-red-50/50"
+                                    className="w-full text-destructive border-border hover:bg-destructive/10"
                                     onClick={() => {
                                         handleLogout();
                                         setMobileOpen(false);
@@ -158,7 +158,7 @@ export function Navbar() {
                             </div>
                         ) : (
                             <Link href="/auth/login" className="w-full" onClick={() => setMobileOpen(false)}>
-                                <Button className="w-full bg-blue-700 hover:bg-blue-800 py-6 text-base">
+                                <Button className="w-full py-6 text-base">
                                     登录
                                 </Button>
                             </Link>
