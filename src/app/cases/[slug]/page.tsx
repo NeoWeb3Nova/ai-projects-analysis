@@ -1,10 +1,13 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowLeft, Heart, Share2, Folder, MoreHorizontal, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { getCaseBySlug, getAllCases } from '@/lib/content';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 export async function generateStaticParams() {
     const cases = getAllCases();
@@ -30,7 +33,7 @@ export default async function CaseDetailPage({ params }: { params: Promise<{ slu
         notFound();
     }
 
-    const { title, category, monetization, stage, publishedAt, tags, content } = caseStudy;
+    const { title, category, monetization, stage, publishedAt, tags, content, cover } = caseStudy;
 
     // Get related cases (same category)
     const relatedCases = getAllCases()
@@ -89,15 +92,34 @@ export default async function CaseDetailPage({ params }: { params: Promise<{ slu
                     {/* Main Content (The Shot) */}
                     <main>
                         {/* Visual Asset */}
-                        <div className={`w-full aspect-[4/3] rounded-xl bg-gradient-to-br ${bgGradient} flex items-center justify-center mb-10 shadow-sm border border-border/50`}>
-                            <span className="text-white/30 font-heading font-bold text-6xl select-none">
-                                {title.charAt(0)}
-                            </span>
+                        <div className={`w-full aspect-[4/3] rounded-xl bg-gradient-to-br ${bgGradient} flex items-center justify-center mb-10 shadow-sm border border-border/50 relative overflow-hidden`}>
+                            {cover ? (
+                                <Image
+                                    src={cover}
+                                    alt={title}
+                                    fill
+                                    className="object-cover"
+                                    priority
+                                />
+                            ) : (
+                                <span className="text-white/30 font-heading font-bold text-6xl select-none">
+                                    {title.charAt(0)}
+                                </span>
+                            )}
                         </div>
 
+
+
                         {/* Description */}
-                        <div className="prose prose-slate dark:prose-invert max-w-none">
-                            <div dangerouslySetInnerHTML={{ __html: content?.replace(/\n/g, '<br />') || '' }} />
+                        <div className="prose prose-lg prose-slate dark:prose-invert max-w-none 
+                            prose-headings:font-heading prose-headings:font-bold prose-h1:text-4xl prose-h2:text-3xl
+                            prose-a:text-primary prose-a:no-underline hover:prose-a:underline
+                            prose-img:rounded-xl prose-img:shadow-md
+                            prose-code:bg-secondary prose-code:rounded prose-code:px-1 prose-code:py-0.5 prose-code:before:content-none prose-code:after:content-none
+                            marker:text-primary">
+                            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                {content}
+                            </ReactMarkdown>
                         </div>
 
                         {/* Comments Stub */}

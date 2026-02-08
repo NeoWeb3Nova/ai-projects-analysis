@@ -6,7 +6,7 @@ monetization: "API调用"
 stage: "盈利中"
 publishedAt: "2025-01-05"
 tags: ["设计", "API", "图像"]
-cover: "/images/cases/ai-image.jpg"
+cover: "/images/cases/ai-image-generator.svg"
 ---
 
 ## 项目背景

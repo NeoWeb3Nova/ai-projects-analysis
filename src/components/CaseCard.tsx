@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Heart, Maximize2, Folder } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -28,9 +29,18 @@ export function CaseCard({ caseStudy }: CaseCardProps) {
         <div className="group flex flex-col gap-2">
             {/* Shot Card - Image Area */}
             <div className="shot-card aspect-[4/3] group relative">
-                {/* Image Placeholder (Replace with actual image if available) */}
-                <div className={`w-full h-full bg-gradient-to-br ${bgGradient} flex items-center justify-center`}>
-                    <span className="text-white/20 font-heading font-bold text-4xl select-none">Aa</span>
+                {/* Image Placeholder or Actual Image */}
+                <div className={`w-full h-full bg-gradient-to-br ${bgGradient} flex items-center justify-center overflow-hidden`}>
+                    {caseStudy.cover ? (
+                        <Image
+                            src={caseStudy.cover}
+                            alt={title}
+                            fill
+                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                    ) : (
+                        <span className="text-white/20 font-heading font-bold text-4xl select-none">Aa</span>
+                    )}
                 </div>
 
                 {/* Overlay */}
