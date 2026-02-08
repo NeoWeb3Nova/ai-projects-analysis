@@ -43,85 +43,94 @@ export default function ForgotPasswordPage() {
     };
 
     return (
-        <div className="p-8 md:p-10">
-            <div className="mb-8 text-center">
-                <h1 className="font-heading font-bold text-2xl text-blue-900 mb-2">
-                    找回密码
-                </h1>
-                <p className="text-slate-500 text-sm">
-                    请输入您的邮箱，我们将向您发送重置链接
-                </p>
+        <div className="relative min-h-[500px] flex items-center justify-center p-4">
+            {/* Background Decor */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+                <div className="absolute top-0 right-1/4 w-64 h-64 bg-primary/20 rounded-full blur-[80px] animate-pulse-slow" />
+                <div className="absolute bottom-0 left-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-[80px]" />
             </div>
 
-            {submitted ? (
-                <div className="text-center py-6">
-                    <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <Send className="w-8 h-8 text-green-700" />
-                    </div>
-                    <h3 className="font-heading font-semibold text-lg text-blue-900 mb-2">
-                        链接已发送
-                    </h3>
-                    <p className="text-slate-600 text-sm mb-8">
-                        请检查您的电子邮箱并按照指令操作
+            <div className="w-full max-w-md glass-card rounded-2xl p-8 md:p-10 relative z-10 animate-accordion-down">
+                <div className="mb-8 text-center">
+                    <h1 className="font-heading font-bold text-2xl text-foreground mb-2 drop-shadow-md">
+                        找回密码
+                    </h1>
+                    <p className="text-muted-foreground text-sm">
+                        请输入您的邮箱，我们将向您发送重置链接
                     </p>
-                    <Link href="/auth/login">
-                        <Button variant="outline" className="w-full h-11">
-                            返回登录
-                        </Button>
-                    </Link>
                 </div>
-            ) : (
-                <>
-                    <form className="space-y-6" onSubmit={handleResetPassword}>
-                        {error && (
-                            <div className="p-3 bg-red-50 border border-red-100 text-red-600 text-sm rounded-lg">
-                                {error}
-                            </div>
-                        )}
 
-                        <div className="space-y-2">
-                            <Label htmlFor="email">电子邮箱</Label>
-                            <div className="relative">
-                                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    placeholder="name@example.com"
-                                    className="pl-10 h-11"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    required
-                                />
-                            </div>
+                {submitted ? (
+                    <div className="text-center py-6 animate-in fade-in zoom-in duration-300">
+                        <div className="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-6 ring-2 ring-green-500/20">
+                            <Send className="w-8 h-8 text-green-500" />
                         </div>
-
-                        <Button
-                            type="submit"
-                            className="w-full bg-blue-700 hover:bg-blue-800 h-11 text-base font-medium transition-all active:scale-[0.98]"
-                            disabled={loading}
-                        >
-                            {loading ? (
-                                <>
-                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                    发送中...
-                                </>
-                            ) : (
-                                '发送重置链接'
-                            )}
-                        </Button>
-                    </form>
-
-                    <div className="mt-8 pt-8 border-t border-slate-100 text-center">
-                        <Link
-                            href="/auth/login"
-                            className="inline-flex items-center text-sm font-medium text-slate-600 hover:text-blue-700"
-                        >
-                            <ArrowLeft className="mr-2 w-4 h-4" />
-                            返回登录
+                        <h3 className="font-heading font-semibold text-lg text-foreground mb-2">
+                            链接已发送
+                        </h3>
+                        <p className="text-muted-foreground text-sm mb-8">
+                            请检查您的电子邮箱并按照指令操作
+                        </p>
+                        <Link href="/auth/login">
+                            <Button variant="outline" className="w-full h-11 border-white/10 hover:bg-white/5 hover:text-primary">
+                                返回登录
+                            </Button>
                         </Link>
                     </div>
-                </>
-            )}
+                ) : (
+                    <>
+                        <form className="space-y-6" onSubmit={handleResetPassword}>
+                            {error && (
+                                <div className="p-3 bg-red-500/10 border border-red-500/20 text-red-400 text-sm rounded-lg backdrop-blur-md">
+                                    <AlertTriangle className="w-4 h-4 inline-block mr-2" />
+                                    {error}
+                                </div>
+                            )}
+
+                            <div className="space-y-2">
+                                <Label htmlFor="email" className="text-foreground/80">电子邮箱</Label>
+                                <div className="relative group">
+                                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                                    <Input
+                                        id="email"
+                                        type="email"
+                                        placeholder="name@example.com"
+                                        className="pl-10 h-11"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            <Button
+                                type="submit"
+                                className="w-full h-11 text-base font-medium shadow-[0_0_20px_rgba(124,58,237,0.4)]"
+                                disabled={loading}
+                            >
+                                {loading ? (
+                                    <>
+                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                        发送中...
+                                    </>
+                                ) : (
+                                    '发送重置链接'
+                                )}
+                            </Button>
+                        </form>
+
+                        <div className="mt-8 pt-8 border-t border-white/10 text-center">
+                            <Link
+                                href="/auth/login"
+                                className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                            >
+                                <ArrowLeft className="mr-2 w-4 h-4" />
+                                返回登录
+                            </Link>
+                        </div>
+                    </>
+                )}
+            </div>
         </div>
     );
 }
