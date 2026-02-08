@@ -13,27 +13,39 @@ export default function HomePage() {
     return (
         <div className="min-h-screen bg-background text-foreground">
             {/* Hero Section */}
-            <section className="py-24 px-6 relative overflow-hidden">
-                <div className="absolute inset-0 bg-primary/5 -z-10" />
-                <div className="max-w-4xl mx-auto text-center">
-                    <Badge className="mb-6 bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
-                        AI落地 + 盈利拆解
-                    </Badge>
-                    <h1 className="font-heading font-bold text-4xl md:text-6xl text-foreground mb-6 leading-tight text-balance">
-                        拆解AI项目的<br />变现路径
+            <section className="relative py-32 px-6 overflow-hidden">
+                {/* Background Effects */}
+                <div className="absolute inset-0 bg-gradient-mesh opacity-40 -z-20" />
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-primary/20 rounded-full blur-[120px] -z-10 animate-pulse-slow" />
+
+                <div className="max-w-5xl mx-auto text-center relative z-10">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8 hover:bg-white/10 transition-colors cursor-default">
+                        <span className="relative flex h-2 w-2">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                        </span>
+                        <span className="text-sm font-medium text-primary-foreground/90">AI 落地 + 盈利拆解</span>
+                    </div>
+
+                    <h1 className="font-heading font-bold text-5xl md:text-7xl lg:text-8xl mb-8 leading-tight tracking-tight">
+                        拆解AI项目的<br />
+                        <span className="text-gradient-purple drop-shadow-lg">变现路径</span>
                     </h1>
-                    <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto text-balance">
+
+                    <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto text-balance leading-relaxed">
                         为爱发电是不够的，一定要变现才能生存。
-                        深入拆解AI项目落地和盈利模式，一步一步理解变现路径。
+                        <br className="hidden md:block" />
+                        深入拆解AI项目落地和盈利模式，<span className="text-foreground font-semibold">一步一步理解变现路径</span>。
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button asChild size="lg" className="text-lg px-8 shadow-lg shadow-primary/20">
+
+                    <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                        <Button asChild size="lg" className="h-14 px-10 text-lg rounded-full bg-primary hover:bg-primary/90 shadow-[0_0_40px_-10px_rgba(124,58,237,0.5)] transition-all hover:scale-105">
                             <Link href="/cases">
                                 浏览案例
                                 <ArrowRight className="ml-2 w-5 h-5" />
                             </Link>
                         </Button>
-                        <Button asChild size="lg" variant="outline" className="text-lg px-8 hover:bg-secondary">
+                        <Button asChild size="lg" variant="outline" className="h-14 px-10 text-lg rounded-full border-white/10 bg-white/5 hover:bg-white/10 hover:text-white backdrop-blur-sm transition-all hover:scale-105">
                             <Link href="/consulting">
                                 咨询服务
                             </Link>
@@ -43,49 +55,39 @@ export default function HomePage() {
             </section>
 
             {/* Stats Section */}
-            <section className="py-12 px-6 border-y border-border bg-card/50 backdrop-blur-sm">
+            <section className="py-12 px-6 border-y border-white/5 bg-secondary/20 backdrop-blur-sm relative z-10">
                 <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div className="text-center group">
-                        <div className="flex justify-center mb-4">
-                            <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                                <TrendingUp className="w-6 h-6 text-primary" />
+                    {[
+                        { icon: TrendingUp, value: '50+', label: '真实案例', color: 'text-primary' },
+                        { icon: DollarSign, value: '¥1M+', label: '合计月收入', color: 'text-emerald-400' },
+                        { icon: Users, value: '10K+', label: '服务用户', color: 'text-purple-400' }
+                    ].map((stat, i) => (
+                        <div key={i} className="text-center group p-6 rounded-2xl transition-colors hover:bg-white/5">
+                            <div className="flex justify-center mb-4">
+                                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 bg-white/5 border border-white/10 shadow-lg`}>
+                                    <stat.icon className={`w-7 h-7 ${stat.color}`} />
+                                </div>
                             </div>
+                            <div className="text-4xl font-heading font-bold text-foreground mb-2 tracking-tight">{stat.value}</div>
+                            <div className="text-sm text-muted-foreground font-medium">{stat.label}</div>
                         </div>
-                        <div className="text-3xl font-heading font-bold text-foreground mb-1">50+</div>
-                        <div className="text-sm text-muted-foreground">真实案例</div>
-                    </div>
-                    <div className="text-center group">
-                        <div className="flex justify-center mb-4">
-                            <div className="w-12 h-12 bg-green-500/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                                <DollarSign className="w-6 h-6 text-green-600 dark:text-green-400" />
-                            </div>
-                        </div>
-                        <div className="text-3xl font-heading font-bold text-foreground mb-1">¥1M+</div>
-                        <div className="text-sm text-muted-foreground">合计月收入</div>
-                    </div>
-                    <div className="text-center group">
-                        <div className="flex justify-center mb-4">
-                            <div className="w-12 h-12 bg-purple-500/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                                <Users className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-                            </div>
-                        </div>
-                        <div className="text-3xl font-heading font-bold text-foreground mb-1">10K+</div>
-                        <div className="text-sm text-muted-foreground">服务用户</div>
-                    </div>
+                    ))}
                 </div>
             </section>
 
             {/* Featured Cases */}
-            <section className="py-20 px-6">
+            <section className="py-24 px-6 relative">
+                <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[100px] -z-10" />
+
                 <div className="max-w-7xl mx-auto">
-                    <div className="flex items-center justify-between mb-12">
+                    <div className="flex items-end justify-between mb-12">
                         <div>
-                            <h2 className="font-heading font-bold text-3xl text-foreground mb-2">
-                                最新案例
+                            <h2 className="font-heading font-bold text-3xl md:text-4xl text-foreground mb-4">
+                                AI项目落地案例
                             </h2>
-                            <p className="text-muted-foreground">深入了解AI项目的变现路径</p>
+                            <p className="text-muted-foreground text-lg">探索不同AI项目的商业模式和盈利策略。</p>
                         </div>
-                        <Button asChild variant="ghost" className="hidden sm:inline-flex hover:bg-transparent hover:text-primary p-0">
+                        <Button asChild variant="ghost" className="hidden sm:inline-flex hover:bg-white/5 text-muted-foreground hover:text-foreground">
                             <Link href="/cases" className="group">
                                 查看全部
                                 <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -99,8 +101,8 @@ export default function HomePage() {
                         ))}
                     </div>
 
-                    <div className="mt-8 text-center sm:hidden">
-                        <Button asChild variant="ghost">
+                    <div className="mt-12 text-center sm:hidden">
+                        <Button asChild variant="secondary" className="w-full">
                             <Link href="/cases">
                                 查看全部
                                 <ArrowRight className="ml-2 w-4 h-4" />
@@ -110,16 +112,17 @@ export default function HomePage() {
                 </div>
             </section>
 
-            {/* Tags Cloud */}
-            <section className="py-20 px-6 bg-secondary/30">
-                <div className="max-w-4xl mx-auto">
-                    <h3 className="font-heading font-semibold text-2xl text-foreground mb-8 text-center">
-                        热门标签
+            {/* Keywords/Tags Cloud */}
+            <section className="py-24 px-6 border-t border-white/5 bg-secondary/10">
+                <div className="max-w-4xl mx-auto text-center">
+                    <h3 className="font-heading font-semibold text-2xl text-foreground mb-8">
+                        按关键词探索
                     </h3>
+                    <p className="text-muted-foreground mb-10">快速找到你感兴趣的AI变现案例。</p>
                     <div className="flex flex-wrap justify-center gap-3">
                         {allTags.map(tag => (
                             <Link key={tag} href={`/cases?tag=${tag}`}>
-                                <Badge variant="secondary" className="px-4 py-2 text-sm cursor-pointer hover:bg-primary hover:text-primary-foreground transition-all duration-300">
+                                <Badge variant="outline" className="px-5 py-2.5 text-sm cursor-pointer border-white/10 hover:border-primary/50 hover:bg-primary/10 hover:text-primary transition-all duration-300">
                                     #{tag}
                                 </Badge>
                             </Link>
@@ -129,12 +132,14 @@ export default function HomePage() {
             </section>
 
             {/* Footer */}
-            <footer className="py-12 px-6 border-t border-border bg-background">
-                <div className="max-w-7xl mx-auto text-center text-muted-foreground">
-                    <p className="mb-4">© 2025 AI案例拆解. 深入理解AI变现路径.</p>
-                    <Link href="/consulting" className="text-primary hover:underline font-medium">
-                        需要AI项目咨询？
-                    </Link>
+            <footer className="py-12 px-6 border-t border-white/10 bg-black/20 backdrop-blur-lg">
+                <div className="max-w-7xl mx-auto text-center">
+                    <p className="mb-4 text-muted-foreground text-sm">
+                        © {new Date().getFullYear()} AI案例拆解. 深入理解AI变现路径.
+                    </p>
+                    <p className="text-muted-foreground text-sm">
+                        由 <a href="https://twitter.com/your_twitter_handle" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">@你的推特ID</a> 倾情打造
+                    </p>
                 </div>
             </footer>
         </div>

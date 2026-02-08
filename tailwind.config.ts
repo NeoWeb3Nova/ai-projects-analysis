@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-    darkMode: "class",
+    darkMode: ["class"],
     content: [
         "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
         "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -12,6 +12,7 @@ const config: Config = {
             fontFamily: {
                 heading: ['Space Grotesk', 'sans-serif'],
                 body: ['DM Sans', 'sans-serif'],
+                sans: ['Outfit', 'DM Sans', 'sans-serif'], // Added Outfit for a more modern tech look
             },
             colors: {
                 background: "hsl(var(--background))",
@@ -54,11 +55,36 @@ const config: Config = {
                     "4": "hsl(var(--chart-4))",
                     "5": "hsl(var(--chart-5))",
                 },
+                neon: {
+                    blue: "hsl(var(--neon-blue))",
+                    purple: "hsl(var(--neon-purple))",
+                    pink: "hsl(var(--neon-pink))",
+                }
             },
             borderRadius: {
                 lg: "var(--radius)",
                 md: "calc(var(--radius) - 2px)",
                 sm: "calc(var(--radius) - 4px)",
+            },
+            animation: {
+                "accordion-down": "accordion-down 0.2s ease-out",
+                "accordion-up": "accordion-up 0.2s ease-out",
+                "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+                "float": "float 6s ease-in-out infinite",
+            },
+            keyframes: {
+                "accordion-down": {
+                    from: { height: "0" },
+                    to: { height: "var(--radix-accordion-content-height)" },
+                },
+                "accordion-up": {
+                    from: { height: "var(--radix-accordion-content-height)" },
+                    to: { height: "0" },
+                },
+                float: {
+                    "0%, 100%": { transform: "translateY(0)" },
+                    "50%": { transform: "translateY(-10px)" },
+                }
             },
         },
     },

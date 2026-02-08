@@ -44,20 +44,20 @@ export function Navbar() {
 
     return (
         <>
-            <nav className="fixed top-4 left-4 right-4 z-50">
-                <div className="max-w-7xl mx-auto bg-background/95 backdrop-blur-sm rounded-2xl shadow-lg border border-border px-6 py-4">
+            <nav className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
+                <div className="w-full max-w-5xl glass rounded-full px-6 py-3 transition-all duration-300 hover:bg-black/60">
                     <div className="flex items-center justify-between">
-                        <Link href="/" className="flex items-center gap-2">
-                            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                                <span className="text-primary-foreground font-bold text-sm">AI</span>
+                        <Link href="/" className="flex items-center gap-3 group">
+                            <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center border border-primary/20 group-hover:border-primary/50 group-hover:bg-primary/30 transition-all duration-300">
+                                <span className="text-primary-foreground font-heading font-bold text-sm group-hover:scale-110 transition-transform">AI</span>
                             </div>
-                            <span className="font-heading font-semibold text-lg text-foreground">
+                            <span className="font-heading font-semibold text-lg text-foreground tracking-tight group-hover:text-primary transition-colors">
                                 案例拆解
                             </span>
                         </Link>
 
                         {/* Desktop Nav */}
-                        <div className="hidden md:flex items-center gap-8">
+                        <div className="hidden md:flex items-center gap-1">
                             {navItems.map(item => {
                                 const Icon = item.icon;
                                 const isActive = pathname === item.href;
@@ -66,8 +66,10 @@ export function Navbar() {
                                         key={item.href}
                                         href={item.href}
                                         className={cn(
-                                            'flex items-center gap-2 text-sm font-medium transition-colors',
-                                            isActive ? 'text-primary' : 'text-muted-foreground hover:text-primary'
+                                            'px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2',
+                                            isActive
+                                                ? 'bg-primary/10 text-primary shadow-[0_0_10px_rgba(124,58,237,0.2)]'
+                                                : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
                                         )}
                                     >
                                         <Icon className="w-4 h-4" />
@@ -75,28 +77,29 @@ export function Navbar() {
                                     </Link>
                                 );
                             })}
+                        </div>
 
+                        <div className="hidden md:flex items-center gap-4 pl-4 border-l border-white/10">
                             {session ? (
                                 <div className="flex items-center gap-4">
-                                    <div className="flex items-center gap-2 px-3 py-1.5 bg-secondary rounded-lg border border-border">
+                                    <div className="flex items-center gap-2 px-3 py-1.5 bg-white/5 rounded-full border border-white/10">
                                         <User className="w-4 h-4 text-muted-foreground" />
                                         <span className="text-xs font-medium text-foreground max-w-[100px] truncate">
                                             {session.user.user_metadata.full_name || session.user.email}
                                         </span>
                                     </div>
                                     <Button
-                                        variant="outline"
+                                        variant="ghost"
                                         size="sm"
                                         onClick={handleLogout}
-                                        className="text-muted-foreground border-border hover:bg-destructive/10 hover:text-destructive hover:border-destructive/20 transition-all"
+                                        className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-full"
                                     >
-                                        <LogOut className="w-4 h-4 mr-2" />
-                                        退出
+                                        <LogOut className="w-4 h-4" />
                                     </Button>
                                 </div>
                             ) : (
                                 <Link href="/auth/login">
-                                    <Button size="sm">
+                                    <Button size="sm" className="rounded-full bg-primary hover:bg-primary/90 shadow-[0_0_15px_rgba(124,58,237,0.4)] transition-all hover:scale-105">
                                         登录
                                     </Button>
                                 </Link>
@@ -105,7 +108,7 @@ export function Navbar() {
 
                         {/* Mobile Menu Button */}
                         <button
-                            className="md:hidden p-2 hover:bg-accent rounded-lg transition-colors"
+                            className="md:hidden p-2 hover:bg-white/10 rounded-full transition-colors"
                             onClick={() => setMobileOpen(!mobileOpen)}
                         >
                             {mobileOpen ? (
