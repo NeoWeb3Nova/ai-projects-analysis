@@ -8,7 +8,7 @@ export function Footer() {
 
     return (
         <footer className="py-12 px-6 border-t border-border bg-background">
-            <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
                 <div className="font-heading font-bold text-xl tracking-tight text-foreground">
                     {t('footer.brand')}
                 </div>
@@ -29,7 +29,7 @@ export function Footer() {
                     <div className="w-5 h-5 rounded-full bg-muted-foreground/20 hover:bg-muted-foreground/40 transition-colors cursor-pointer" />
                 </div>
             </div>
-            <div className="max-w-[1600px] mx-auto mt-12 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-foreground">
+            <div className="max-w-7xl mx-auto mt-12 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-foreground">
                 <p>{t('footer.copyright')}</p>
                 <div className="flex gap-4">
                     <Link href="#" className="hover:text-foreground">{t('footer.columns.jobs')}</Link>

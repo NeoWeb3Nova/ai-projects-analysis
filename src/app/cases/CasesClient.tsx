@@ -75,7 +75,7 @@ export function CasesClient({ initialCases, categories, monetizationTypes }: Cas
 
     return (
         <div className="min-h-screen pb-16 pt-8 bg-background text-foreground">
-            <div className="container mx-auto px-6">
+            <div className="max-w-7xl mx-auto px-6">
 
                 {/* Header & Filters Bar */}
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-12">

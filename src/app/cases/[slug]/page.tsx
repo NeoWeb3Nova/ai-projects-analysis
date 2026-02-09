@@ -58,7 +58,7 @@ export default async function CaseDetailPage({ params }: { params: Promise<{ slu
         <div className="min-h-screen bg-background pb-20">
             {/* Header / Nav Area for Shot */}
             <header className="sticky top-16 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border/40">
-                <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+                <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
                     <div className="flex items-center gap-4">
                         <Avatar className="h-10 w-10 border border-border">
                             <AvatarImage src={`https://api.dicebear.com/9.x/notionists/svg?seed=${slug}`} />
@@ -89,7 +89,7 @@ export default async function CaseDetailPage({ params }: { params: Promise<{ slu
                 </div>
             </header>
 
-            <div className="container mx-auto px-4 py-8 md:py-12">
+            <div className="max-w-7xl mx-auto px-6 py-8 md:py-12">
                 <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-12">
 
                     {/* Main Content (The Shot) */}

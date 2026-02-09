@@ -17,13 +17,12 @@ export function HomeGrid({ cases }: HomeGridProps) {
 
     return (
         <section className="px-6 pb-20">
-            <div className="max-w-[1600px] mx-auto">
-                <div className="flex items-center justify-between mb-8">
-                    <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-6 px-6">
+            <div className="max-w-7xl mx-auto">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+                    <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide w-full sm:w-auto">
                         <Button variant="secondary" className="rounded-lg h-9 text-sm font-medium px-4 bg-secondary text-foreground whitespace-nowrap">
                             {t('home.grid.allProjects')}
                         </Button>
-                        {/* Static buttons for categories/tags - in real app might be dynamic or translated */}
                         {['Animation', 'Branding', 'Illustration', 'Mobile', 'Print'].map(cat => (
                             <Button key={cat} variant="ghost" className="rounded-lg h-9 text-sm font-medium px-4 text-muted-foreground hover:text-foreground whitespace-nowrap">
                                 {cat}
@@ -31,12 +30,10 @@ export function HomeGrid({ cases }: HomeGridProps) {
                         ))}
                     </div>
 
-                    <div className="flex items-center gap-2 ml-4">
-                        <Button variant="outline" size="sm" className="h-9 px-3 rounded-lg text-xs font-medium border-border">
-                            <Filter className="w-3.5 h-3.5 mr-2" />
-                            {t('home.grid.filter')}
-                        </Button>
-                    </div>
+                    <Button variant="outline" size="sm" className="h-9 px-3 rounded-lg text-xs font-medium border-border shrink-0">
+                        <Filter className="w-3.5 h-3.5 mr-2" />
+                        {t('home.grid.filter')}
+                    </Button>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-12">
