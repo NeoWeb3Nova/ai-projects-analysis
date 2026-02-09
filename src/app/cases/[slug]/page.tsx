@@ -111,12 +111,7 @@ export default async function CaseDetailPage({ params }: { params: Promise<{ slu
 
 
                         {/* Description */}
-                        <div className="prose prose-lg prose-slate dark:prose-invert max-w-none 
-                            prose-headings:font-heading prose-headings:font-bold prose-h1:text-4xl prose-h2:text-3xl
-                            prose-a:text-primary prose-a:no-underline hover:prose-a:underline
-                            prose-img:rounded-xl prose-img:shadow-md
-                            prose-code:bg-secondary prose-code:rounded prose-code:px-1 prose-code:py-0.5 prose-code:before:content-none prose-code:after:content-none
-                            marker:text-primary">
+                        <div className="prose prose-lg prose-slate dark:prose-invert max-w-none">
                             <ReactMarkdown remarkPlugins={[remarkGfm]}>
                                 {content}
                             </ReactMarkdown>

@@ -26,6 +26,12 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         }
     }, []);
 
+    useEffect(() => {
+        if (typeof document !== 'undefined') {
+            document.documentElement.lang = locale === 'zh' ? 'zh-CN' : 'en';
+        }
+    }, [locale]);
+
     const setLocale = (newLocale: Locale) => {
         setLocaleState(newLocale);
         localStorage.setItem('locale', newLocale);
@@ -49,10 +55,6 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
         return typeof value === 'string' ? value : key;
     };
-
-    if (!mounted) {
-        return <>{children}</>;
-    }
 
     return (
         <LanguageContext.Provider value={{ locale, setLocale, t, dictionary }}>

@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
-import { Outfit, DM_Sans } from "next/font/google";
+import { Outfit, Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 
-const outfit = Outfit({
+const inter = Inter({
     subsets: ["latin"],
-    variable: '--font-outfit',
+    variable: '--font-inter',
     display: 'swap',
 });
 
-const dmSans = DM_Sans({
+const outfit = Outfit({
     subsets: ["latin"],
-    variable: '--font-dm-sans',
+    variable: '--font-outfit',
     display: 'swap',
 });
 
@@ -27,7 +27,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="zh-CN" className={`${outfit.variable} ${dmSans.variable}`}>
+        <html lang="zh-CN" className={`${outfit.variable} ${inter.variable} antialiased`}>
             <body className="bg-background font-sans text-foreground min-h-screen selection:bg-primary/30">
                 <LanguageProvider>
                     <Navbar />

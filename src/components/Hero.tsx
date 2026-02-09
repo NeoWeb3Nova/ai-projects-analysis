@@ -16,10 +16,10 @@ export function Hero({ tags }: HeroProps) {
             <div className="max-w-3xl mx-auto space-y-8">
                 <div className="space-y-4">
                     {/* Simplified title with one translation key, or split if needed. Dictionary has it as one string. */}
-                    <h1 className="font-heading font-bold text-4xl md:text-6xl lg:text-7xl tracking-tight leading-tight">
+                    <h1 className="">
                         {t('home.hero.title')}
                     </h1>
-                    <p className="text-lg md:text-xl text-muted-foreground w-full max-w-2xl mx-auto leading-relaxed">
+                    <p className="text-lead w-full max-w-2xl mx-auto">
                         {t('home.hero.subtitle')}
                     </p>
                 </div>

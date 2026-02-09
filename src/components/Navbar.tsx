@@ -92,10 +92,28 @@ export function Navbar() {
                         />
                     </div>
 
-                    <Button variant="ghost" size="icon" onClick={toggleLanguage} className="hidden md:flex rounded-full">
-                        <Globe className="w-5 h-5 text-muted-foreground" />
-                        <span className="sr-only">Switch Language</span>
-                    </Button>
+                    {/* Language Toggle Switch */}
+                    <div
+                        onClick={toggleLanguage}
+                        className="hidden md:flex items-center bg-secondary/50 rounded-full p-1 cursor-pointer w-[72px] h-9 relative border border-border/50 group hover:border-primary/30 transition-all"
+                    >
+                        <div
+                            className={cn(
+                                "absolute w-8 h-7 bg-background rounded-full shadow-sm transition-all duration-300",
+                                locale === 'zh' ? "left-1" : "left-[35px]"
+                            )}
+                        />
+                        <div className="flex w-full justify-between items-center px-1 z-10 select-none">
+                            <span className={cn(
+                                "text-[10px] font-bold w-7 text-center transition-colors",
+                                locale === 'zh' ? "text-foreground" : "text-muted-foreground group-hover:text-foreground/70"
+                            )}>中</span>
+                            <span className={cn(
+                                "text-[10px] font-bold w-7 text-center transition-colors",
+                                locale === 'en' ? "text-foreground" : "text-muted-foreground group-hover:text-foreground/70"
+                            )}>EN</span>
+                        </div>
+                    </div>
 
                     {session ? (
                         <div className="flex items-center gap-3">
@@ -173,10 +191,27 @@ export function Navbar() {
                             placeholder={t('nav.search')}
                             className="h-10 pl-9 pr-4 rounded-md bg-secondary border-none text-sm w-full"
                         />
-                        <Button variant="ghost" size="sm" onClick={toggleLanguage} className="mt-2 w-full justify-start">
-                            <Globe className="w-4 h-4 mr-2" />
-                            {locale === 'zh' ? 'English' : '中文'}
-                        </Button>
+                        <div
+                            onClick={toggleLanguage}
+                            className="mt-4 flex items-center bg-secondary/50 rounded-xl p-1 cursor-pointer w-full h-12 relative border border-border/50 transition-all"
+                        >
+                            <div
+                                className={cn(
+                                    "absolute w-[calc(50%-4px)] h-10 bg-background rounded-lg shadow-sm transition-all duration-300",
+                                    locale === 'zh' ? "left-1" : "left-[calc(50%+3px)]"
+                                )}
+                            />
+                            <div className="flex w-full justify-between items-center z-10 select-none">
+                                <span className={cn(
+                                    "flex-1 text-center text-sm font-bold transition-colors",
+                                    locale === 'zh' ? "text-foreground" : "text-muted-foreground"
+                                )}>中文 (ZH)</span>
+                                <span className={cn(
+                                    "flex-1 text-center text-sm font-bold transition-colors",
+                                    locale === 'en' ? "text-foreground" : "text-muted-foreground"
+                                )}>English (EN)</span>
+                            </div>
+                        </div>
                     </div>
                     {!session && (
                         <div className="flex flex-col gap-2 mt-2">

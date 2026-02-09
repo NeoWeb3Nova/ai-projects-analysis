@@ -10,9 +10,9 @@ const config: Config = {
     theme: {
         extend: {
             fontFamily: {
-                heading: ['Space Grotesk', 'sans-serif'],
-                body: ['DM Sans', 'sans-serif'],
-                sans: ['Outfit', 'DM Sans', 'sans-serif'], // Added Outfit for a more modern tech look
+                heading: ['var(--font-outfit)', 'sans-serif'],
+                sans: ['var(--font-inter)', 'sans-serif'],
+                body: ['var(--font-inter)', 'sans-serif'],
             },
             colors: {
                 background: "hsl(var(--background))",
@@ -85,6 +85,45 @@ const config: Config = {
                     "0%, 100%": { transform: "translateY(0)" },
                     "50%": { transform: "translateY(-10px)" },
                 }
+            },
+            typography: {
+                DEFAULT: {
+                    css: {
+                        '--tw-prose-headings': 'var(--font-outfit)',
+                        '--tw-prose-body': 'var(--font-inter)',
+                        '--tw-prose-links': 'hsl(var(--primary))',
+                        '--tw-prose-bold': 'hsl(var(--foreground))',
+                        h1: {
+                            fontFamily: 'var(--font-outfit)',
+                            fontWeight: '700',
+                            letterSpacing: '-0.025em',
+                        },
+                        h2: {
+                            fontFamily: 'var(--font-outfit)',
+                            fontWeight: '600',
+                            letterSpacing: '-0.025em',
+                        },
+                        h3: {
+                            fontFamily: 'var(--font-outfit)',
+                            fontWeight: '600',
+                        },
+                        code: {
+                            backgroundColor: 'hsl(var(--secondary))',
+                            padding: '0.2em 0.4em',
+                            borderRadius: '0.25rem',
+                            fontWeight: '400',
+                        },
+                        'code::before': { content: '""' },
+                        'code::after': { content: '""' },
+                        a: {
+                            textDecoration: 'none',
+                            fontWeight: '500',
+                            '&:hover': {
+                                textDecoration: 'underline',
+                            },
+                        },
+                    },
+                },
             },
         },
     },
