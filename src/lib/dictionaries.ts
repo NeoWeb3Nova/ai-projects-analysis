@@ -117,6 +117,57 @@ export const dictionaries = {
             emailContact: '邮箱联系',
             wechatContact: '微信联系',
         },
+        pro: {
+            hero: {
+                title: '开启 AI 变现之旅',
+                subtitle: '成为 Pro 会员，解锁所有深度案例拆解、商业模式库及会员专属资源',
+            },
+            plans: {
+                monthly: {
+                    name: '月度会员',
+                    price: '¥99',
+                    description: '适合想尝试 AI 案例库的用户',
+                },
+                annual: {
+                    name: '年度会员',
+                    price: '¥799',
+                    description: '最受欢迎，平均每月仅需 ¥66',
+                },
+                lifetime: {
+                    name: '永久会员',
+                    price: '¥2999',
+                    description: '一次性付费，终身访问所有资源',
+                },
+            },
+            features: {
+                title: '会员特权',
+                list: [
+                    '解锁 200+ 深度 AI 案例拆解',
+                    '每周更新 2-3 个最新盈利项目',
+                    '访问专有的变现模式画布',
+                    '加入私密高质量交流群',
+                    '咨询服务享受 8 折优惠',
+                ],
+            },
+            faq: {
+                title: '常见问题',
+                items: [
+                    {
+                        q: '会员有效期如何计算？',
+                        a: '从支付成功之日起计算，到期前系统会提醒您续费。',
+                    },
+                    {
+                        q: '可以申请退款吗？',
+                        a: '由于数字产品的特殊性，订阅成功后不支持退款，请您谅解。',
+                    },
+                    {
+                        q: '永久会员包含未来所有更新吗？',
+                        a: '是的，永久会员可以访问目前及未来平台上线的所有深度案例和工具。',
+                    },
+                ],
+            },
+            cta: '立即开启 Pro 权限',
+        },
     },
     en: {
         nav: {
@@ -164,6 +215,7 @@ export const dictionaries = {
                     illustration: 'Illustration',
                     mobile: 'Mobile',
                     print: 'Print',
+                    web: 'Web Design',
                 }
             },
         },
@@ -233,6 +285,57 @@ export const dictionaries = {
             submitBtn: 'Submit Consultation',
             emailContact: 'Email Contact',
             wechatContact: 'WeChat Contact',
+        },
+        pro: {
+            hero: {
+                title: 'Start Your AI Monetization Journey',
+                subtitle: 'Become a Pro Member to unlock all deep case studies, business model libraries, and exclusive resources.',
+            },
+            plans: {
+                monthly: {
+                    name: 'Monthly',
+                    price: '$15',
+                    description: 'Perfect for trying out our AI case library.',
+                },
+                annual: {
+                    name: 'Annual',
+                    price: '$129',
+                    description: 'Most popular, only $10.75 per month.',
+                },
+                lifetime: {
+                    name: 'Lifetime',
+                    price: '$499',
+                    description: 'One-time payment, lifetime access to everything.',
+                },
+            },
+            features: {
+                title: 'Pro Benefits',
+                list: [
+                    'Unlock 200+ deep AI case studies',
+                    '2-3 new profitable projects weekly',
+                    'Access to exclusive monetization canvases',
+                    'Join private high-quality community',
+                    '20% off all consulting services',
+                ],
+            },
+            faq: {
+                title: 'Frequently Asked Questions',
+                items: [
+                    {
+                        q: 'How is membership duration calculated?',
+                        a: 'From the day of successful payment, with reminders before expiry.',
+                    },
+                    {
+                        q: 'Is there a refund policy?',
+                        a: 'Due to the nature of digital products, subscriptions are non-refundable.',
+                    },
+                    {
+                        q: 'Does lifetime include future updates?',
+                        a: 'Yes, lifetime members access all current and future cases and tools.',
+                    },
+                ],
+            },
+            cta: 'Unlock Pro Now',
         },
     },
 };
