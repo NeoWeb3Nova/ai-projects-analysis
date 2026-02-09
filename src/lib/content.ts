@@ -17,13 +17,20 @@ export interface CaseStudy {
 
 const CASES_DIR = path.join(process.cwd(), 'content/cases');
 
-export function getAllCases(): CaseStudy[] {
-    const files = fs.readdirSync(CASES_DIR);
+export function getAllCases(locale: string = 'zh'): CaseStudy[] {
+    const localeDir = path.join(CASES_DIR, locale);
+
+    // Check if directory exists, fallback to 'zh' if not
+    if (!fs.existsSync(localeDir)) {
+        return getAllCases('zh');
+    }
+
+    const files = fs.readdirSync(localeDir);
 
     const cases = files
         .filter(file => file.endsWith('.md'))
         .map(file => {
-            const filePath = path.join(CASES_DIR, file);
+            const filePath = path.join(localeDir, file);
             const fileContent = fs.readFileSync(filePath, 'utf-8');
             const { data, content } = matter(fileContent);
 
@@ -46,19 +53,19 @@ export function getAllCases(): CaseStudy[] {
     );
 }
 
-export function getCaseBySlug(slug: string): CaseStudy | null {
-    const cases = getAllCases();
+export function getCaseBySlug(slug: string, locale: string = 'zh'): CaseStudy | null {
+    const cases = getAllCases(locale);
     return cases.find(c => c.slug === slug) || null;
 }
 
-export function getCategories(): string[] {
-    const cases = getAllCases();
+export function getCategories(locale: string = 'zh'): string[] {
+    const cases = getAllCases(locale);
     const categories = [...new Set(cases.map(c => c.category))];
     return categories.sort();
 }
 
-export function getMonetizationTypes(): string[] {
-    const cases = getAllCases();
+export function getMonetizationTypes(locale: string = 'zh'): string[] {
+    const cases = getAllCases(locale);
     const types = [...new Set(cases.map(c => c.monetization))];
     return types.sort();
 }

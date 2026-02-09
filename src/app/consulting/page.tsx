@@ -6,9 +6,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function ConsultingPage() {
     const [submitted, setSubmitted] = useState(false);
+    const { t } = useLanguage();
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -27,10 +29,10 @@ export default function ConsultingPage() {
                 {/* Header */}
                 <div className="text-center mb-16 animate-accordion-down">
                     <h1 className="font-heading font-bold text-4xl md:text-5xl mb-6">
-                        <span className="text-gradient-purple">AI项目落地咨询</span>
+                        <span className="text-gradient-purple">{t('consulting.title')}</span>
                     </h1>
                     <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                        从0到1帮您实现AI商业化，提供专业的项目落地和变现咨询服务
+                        {t('consulting.subtitle')}
                     </p>
                 </div>
 
@@ -41,10 +43,10 @@ export default function ConsultingPage() {
                             <MessageSquare className="w-7 h-7 text-blue-400" />
                         </div>
                         <h3 className="font-heading font-bold text-xl text-foreground mb-3">
-                            项目评估
+                            {t('consulting.assessment.title')}
                         </h3>
                         <p className="text-muted-foreground leading-relaxed">
-                            评估您的AI项目可行性，识别潜在机会和挑战
+                            {t('consulting.assessment.description')}
                         </p>
                     </div>
 
@@ -53,10 +55,10 @@ export default function ConsultingPage() {
                             <TrendingUp className="w-7 h-7 text-emerald-400" />
                         </div>
                         <h3 className="font-heading font-bold text-xl text-foreground mb-3">
-                            商业化策略
+                            {t('consulting.strategy.title')}
                         </h3>
                         <p className="text-muted-foreground leading-relaxed">
-                            设计盈利模式，制定定价策略，规划变现路径
+                            {t('consulting.strategy.description')}
                         </p>
                     </div>
 
@@ -65,10 +67,10 @@ export default function ConsultingPage() {
                             <Phone className="w-7 h-7 text-purple-400" />
                         </div>
                         <h3 className="font-heading font-bold text-xl text-foreground mb-3">
-                            技术落地
+                            {t('consulting.implementation.title')}
                         </h3>
                         <p className="text-muted-foreground leading-relaxed">
-                            指导技术选型，优化架构设计，加速产品开发
+                            {t('consulting.implementation.description')}
                         </p>
                     </div>
                 </div>
@@ -77,7 +79,7 @@ export default function ConsultingPage() {
                 <div className="max-w-3xl mx-auto">
                     <div className="glass-card rounded-2xl p-8 md:p-10">
                         <h2 className="font-heading font-bold text-2xl text-foreground mb-8 text-center">
-                            预约咨询
+                            {t('consulting.formTitle')}
                         </h2>
 
                         {submitted ? (
@@ -86,65 +88,65 @@ export default function ConsultingPage() {
                                     <Send className="w-10 h-10 text-green-500" />
                                 </div>
                                 <h3 className="font-heading font-bold text-2xl text-foreground mb-2">
-                                    提交成功！
+                                    {t('consulting.formSuccess')}
                                 </h3>
                                 <p className="text-muted-foreground mb-8 text-lg">
-                                    我们会在24小时内联系您
+                                    {t('consulting.formSuccessDesc')}
                                 </p>
                                 <Button
                                     variant="outline"
                                     className="border-white/10 hover:bg-white/5"
                                     onClick={() => setSubmitted(false)}
                                 >
-                                    提交新的咨询
+                                    {t('consulting.newConsultation')}
                                 </Button>
                             </div>
                         ) : (
                             <form onSubmit={handleSubmit} className="space-y-6">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
-                                        <Label htmlFor="name" className="text-foreground/80 mb-2 block">姓名 *</Label>
+                                        <Label htmlFor="name" className="text-foreground/80 mb-2 block">{t('consulting.name')}</Label>
                                         <Input
                                             id="name"
                                             required
-                                            placeholder="您的姓名"
+                                            placeholder={t('consulting.namePlaceholder')}
                                             className="bg-black/20 border-white/10 focus:bg-black/40"
                                         />
                                     </div>
                                     <div>
-                                        <Label htmlFor="company" className="text-foreground/80 mb-2 block">公司（选填）</Label>
+                                        <Label htmlFor="company" className="text-foreground/80 mb-2 block">{t('consulting.company')}</Label>
                                         <Input
                                             id="company"
-                                            placeholder="您的公司名称"
+                                            placeholder={t('consulting.companyPlaceholder')}
                                             className="bg-black/20 border-white/10 focus:bg-black/40"
                                         />
                                     </div>
                                 </div>
 
                                 <div>
-                                    <Label htmlFor="email" className="text-foreground/80 mb-2 block">邮箱 *</Label>
+                                    <Label htmlFor="email" className="text-foreground/80 mb-2 block">{t('consulting.email')}</Label>
                                     <Input
                                         id="email"
                                         type="email"
                                         required
-                                        placeholder="your@email.com"
+                                        placeholder={t('consulting.emailPlaceholder')}
                                         className="bg-black/20 border-white/10 focus:bg-black/40"
                                     />
                                 </div>
 
                                 <div>
-                                    <Label htmlFor="message" className="text-foreground/80 mb-2 block">需求描述 *</Label>
+                                    <Label htmlFor="message" className="text-foreground/80 mb-2 block">{t('consulting.needs')}</Label>
                                     <Textarea
                                         id="message"
                                         required
-                                        placeholder="请描述您的AI项目或咨询需求..."
+                                        placeholder={t('consulting.needsPlaceholder')}
                                         rows={5}
                                         className="bg-black/20 border-white/10 focus:bg-black/40 resize-none rounded-xl"
                                     />
                                 </div>
 
                                 <Button type="submit" size="lg" className="w-full text-base font-medium shadow-[0_0_20px_rgba(124,58,237,0.3)] hover:scale-[1.01] transition-all">
-                                    提交咨询
+                                    {t('consulting.submitBtn')}
                                 </Button>
                             </form>
                         )}
@@ -159,7 +161,7 @@ export default function ConsultingPage() {
                         </div>
                         <div>
                             <h3 className="font-heading font-semibold text-foreground mb-1">
-                                邮箱联系
+                                {t('consulting.emailContact')}
                             </h3>
                             <p className="text-sm text-muted-foreground">contact@example.com</p>
                         </div>
@@ -171,7 +173,7 @@ export default function ConsultingPage() {
                         </div>
                         <div>
                             <h3 className="font-heading font-semibold text-foreground mb-1">
-                                微信联系
+                                {t('consulting.wechatContact')}
                             </h3>
                             <p className="text-sm text-muted-foreground">WeChat: AI-Consulting</p>
                         </div>

@@ -62,7 +62,7 @@ export function Navbar() {
                 {/* Left Side: Logo & Nav */}
                 <div className="flex items-center gap-8">
                     <Link href="/" className="font-heading font-bold text-xl tracking-tight hover:opacity-80 transition-opacity">
-                        AI案例拆解
+                        {t('footer.brand')}
                     </Link>
 
                     <div className="hidden md:flex items-center gap-6">

@@ -8,6 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { getCaseBySlug, getAllCases } from '@/lib/content';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { getLocaleServer, getTServer } from '@/lib/i18n-server';
 
 export async function generateStaticParams() {
     const cases = getAllCases();
@@ -27,7 +28,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function CaseDetailPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    const caseStudy = getCaseBySlug(slug);
+    const locale = await getLocaleServer();
+    const t = await getTServer();
+    const caseStudy = getCaseBySlug(slug, locale);
 
     if (!caseStudy) {
         notFound();
@@ -36,7 +39,7 @@ export default async function CaseDetailPage({ params }: { params: Promise<{ slu
     const { title, category, monetization, stage, publishedAt, tags, content, cover } = caseStudy;
 
     // Get related cases (same category)
-    const relatedCases = getAllCases()
+    const relatedCases = getAllCases(locale)
         .filter(c => c.slug !== slug && c.category === category)
         .slice(0, 4);
 
@@ -119,9 +122,9 @@ export default async function CaseDetailPage({ params }: { params: Promise<{ slu
 
                         {/* Comments Stub */}
                         <div className="mt-16 pt-8 border-t border-border">
-                            <h3 className="font-heading font-bold text-lg mb-6">Comments</h3>
+                            <h3 className="font-heading font-bold text-lg mb-6">{t('common.comments')}</h3>
                             <div className="bg-secondary/30 rounded-lg p-8 text-center text-muted-foreground">
-                                No comments yet. Be the first to share your thoughts!
+                                {t('common.noComments')}
                             </div>
                         </div>
                     </main>
@@ -132,31 +135,31 @@ export default async function CaseDetailPage({ params }: { params: Promise<{ slu
                         <div className="flex flex-col gap-3">
                             <Button className="w-full justify-start" variant="secondary">
                                 <Share2 className="w-4 h-4 mr-2" />
-                                Share
+                                {t('common.share')}
                             </Button>
                             <Button className="w-full justify-start" variant="secondary">
                                 <Folder className="w-4 h-4 mr-2" />
-                                Add to Collection
+                                {t('common.addCollection')}
                             </Button>
                         </div>
 
                         {/* Shot Details */}
                         <div className="space-y-4">
                             <div className="flex items-center justify-between text-sm">
-                                <span className="text-muted-foreground">Category</span>
+                                <span className="text-muted-foreground">{t('common.category')}</span>
                                 <span className="font-medium">{category}</span>
                             </div>
                             <div className="flex items-center justify-between text-sm">
-                                <span className="text-muted-foreground">Monetization</span>
+                                <span className="text-muted-foreground">{t('common.monetization')}</span>
                                 <span className="font-medium">{monetization}</span>
                             </div>
                             <div className="flex items-center justify-between text-sm">
-                                <span className="text-muted-foreground">Stage</span>
+                                <span className="text-muted-foreground">{t('common.stage')}</span>
                                 <span className="font-medium">{stage}</span>
                             </div>
                             <div className="flex items-center justify-between text-sm">
-                                <span className="text-muted-foreground">Published</span>
-                                <span className="font-medium">{new Date(publishedAt).toLocaleDateString()}</span>
+                                <span className="text-muted-foreground">{t('common.published')}</span>
+                                <span className="font-medium">{new Date(publishedAt).toLocaleDateString(locale === 'zh' ? 'zh-CN' : 'en-US')}</span>
                             </div>
                         </div>
 
@@ -174,7 +177,7 @@ export default async function CaseDetailPage({ params }: { params: Promise<{ slu
 
                         {/* More from Author Stub */}
                         <div className="border-t border-border pt-6">
-                            <h4 className="font-medium text-sm mb-4">More by AI Analyst</h4>
+                            <h4 className="font-medium text-sm mb-4">{t('common.moreFrom')} AI Analyst</h4>
                             <div className="grid grid-cols-2 gap-4">
                                 {[1, 2, 3, 4].map(i => (
                                     <div key={i} className="aspect-[4/3] bg-secondary rounded-md hover:opacity-80 transition-opacity cursor-pointer"></div>
@@ -187,9 +190,9 @@ export default async function CaseDetailPage({ params }: { params: Promise<{ slu
                 {/* Related Shots Bottom */}
                 <section className="mt-20 pt-12 border-t border-border">
                     <div className="flex items-center justify-between mb-8">
-                        <h3 className="font-heading font-bold text-xl">You might also like</h3>
+                        <h3 className="font-heading font-bold text-xl">{t('home.grid.youMightLike')}</h3>
                         <Link href="/cases" className="text-sm font-medium text-primary hover:underline">
-                            View all
+                            {t('home.grid.viewAll')}
                         </Link>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">

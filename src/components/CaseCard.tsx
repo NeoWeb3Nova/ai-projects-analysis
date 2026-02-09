@@ -6,12 +6,14 @@ import { Heart, Maximize2, Folder } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import type { CaseStudy } from '@/types';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface CaseCardProps {
     caseStudy: CaseStudy;
 }
 
 export function CaseCard({ caseStudy }: CaseCardProps) {
+    const { t } = useLanguage();
     const { slug, title, category, monetization, publishedAt } = caseStudy;
 
     // Generate a consistent gradient or color based on the title or slug for placeholder
@@ -44,8 +46,8 @@ export function CaseCard({ caseStudy }: CaseCardProps) {
                 </div>
 
                 {/* Overlay */}
-                <Link href={`/cases/${slug}`} className="absolute inset-0 z-10" aria-label={`View ${title}`}>
-                    <span className="sr-only">View {title}</span>
+                <Link href={`/cases/${slug}`} className="absolute inset-0 z-10" aria-label={`${t('home.grid.viewAll')} ${title}`}>
+                    <span className="sr-only">{t('home.grid.viewAll')} {title}</span>
                 </Link>
 
                 <div className="shot-overlay">
@@ -54,10 +56,10 @@ export function CaseCard({ caseStudy }: CaseCardProps) {
                             {title}
                         </div>
                         <div className="flex gap-2 relative z-20">
-                            <button className="h-8 w-8 bg-white text-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors shadow-sm" aria-label="Save">
+                            <button className="h-8 w-8 bg-white text-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors shadow-sm" aria-label={t('common.save')}>
                                 <Folder className="w-4 h-4" />
                             </button>
-                            <button className="h-8 w-8 bg-white text-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors shadow-sm" aria-label="Like">
+                            <button className="h-8 w-8 bg-white text-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors shadow-sm" aria-label={t('common.like')}>
                                 <Heart className="w-4 h-4" />
                             </button>
                         </div>

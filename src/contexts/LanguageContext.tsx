@@ -35,6 +35,8 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     const setLocale = (newLocale: Locale) => {
         setLocaleState(newLocale);
         localStorage.setItem('locale', newLocale);
+        // Set cookie for server-side access
+        document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000`; // 1 year
     };
 
     const dictionary = dictionaries[locale];
