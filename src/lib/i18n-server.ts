@@ -27,6 +27,6 @@ export async function getTServer() {
             }
         }
 
-        return typeof value === 'string' ? value : key;
+        return value !== undefined ? value : key;
     };
 }

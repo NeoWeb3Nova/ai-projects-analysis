@@ -2,7 +2,7 @@
 title: "AI Image Generation: New B2B Monetization Ideas"
 slug: "ai-image-generator"
 category: "Design Tools"
-monetization: "API-based"
+monetization: "API Billing"
 stage: "Profitable"
 publishedAt: "2025-01-05"
 tags: ["Design", "API", "Image"]

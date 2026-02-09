@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { dictionaries, Locale } from '@/lib/dictionaries';
 
 type Dictionary = typeof dictionaries.en;
@@ -15,6 +16,7 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
+    const router = useRouter();
     const [locale, setLocaleState] = useState<Locale>('zh');
     const [mounted, setMounted] = useState(false);
 
@@ -37,6 +39,9 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem('locale', newLocale);
         // Set cookie for server-side access
         document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000`; // 1 year
+
+        // Refresh the page data to update Server Components
+        router.refresh();
     };
 
     const dictionary = dictionaries[locale];
@@ -55,7 +60,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
             }
         }
 
-        return typeof value === 'string' ? value : key;
+        return value !== undefined ? value : key;
     };
 
     return (

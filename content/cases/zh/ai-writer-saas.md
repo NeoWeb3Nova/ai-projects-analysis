@@ -1,11 +1,11 @@
 ---
 title: "AI写作工具：内容创作者的变现之路"
 slug: "ai-writer-saas"
-category: "内容创作"
-monetization: "订阅制"
-stage: "盈利中"
+category: "Content Creation"
+monetization: "Subscription"
+stage: "Profitable"
 publishedAt: "2025-01-10"
-tags: ["写作", "SaaS", "内容"]
+tags: ["Writing", "SaaS", "Content"]
 cover: "/images/cases/ai-writer-saas.jpg"
 ---
 

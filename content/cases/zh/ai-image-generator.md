@@ -1,11 +1,11 @@
 ---
 title: "AI图像生成：B端变现新思路"
 slug: "ai-image-generator"
-category: "设计工具"
-monetization: "API调用"
-stage: "盈利中"
+category: "Design Tools"
+monetization: "API Billing"
+stage: "Profitable"
 publishedAt: "2025-01-05"
-tags: ["设计", "API", "图像"]
+tags: ["Design", "API", "Image"]
 cover: "/images/cases/ai-image-generator.jpg"
 ---
 

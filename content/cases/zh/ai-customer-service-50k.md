@@ -1,11 +1,11 @@
 ---
 title: "AI客服系统：从0到月入50万"
 slug: "ai-customer-service-50k"
-category: "企业服务"
-monetization: "订阅制"
-stage: "盈利中"
+category: "Enterprise Services"
+monetization: "Subscription"
+stage: "Profitable"
 publishedAt: "2025-01-15"
-tags: ["客服", "SaaS", "订阅"]
+tags: ["Customer Service", "SaaS", "Subscription"]
 cover: "/images/cases/ai-customer-service-50k.jpg"
 ---
 
