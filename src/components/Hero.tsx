@@ -41,7 +41,7 @@ export function Hero({ tags }: HeroProps) {
                     <span>{t('home.search.trending')}</span>
                     {tags.map(tag => (
                         <Link key={tag} href={`/cases?tag=${tag}`} className="hover:text-primary transition-colors">
-                            {tag},
+                            {t(`home.labels.tags.${tag}`)},
                         </Link>
                     ))}
                     <Link href="/cases" className="hover:text-primary transition-colors">{t('home.search.more')}</Link>

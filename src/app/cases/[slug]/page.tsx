@@ -79,11 +79,11 @@ export default async function CaseDetailPage({ params }: { params: Promise<{ slu
 
                     <div className="flex items-center gap-2">
                         <Button variant="secondary" size="sm" className="hidden sm:flex">
-                            Save
+                            {t('common.save')}
                         </Button>
                         <Button className="bg-primary hover:bg-primary/90 text-white" size="sm">
                             <Heart className="w-4 h-4 mr-2 fill-current" />
-                            Like
+                            {t('common.like')}
                         </Button>
                     </div>
                 </div>
@@ -147,15 +147,15 @@ export default async function CaseDetailPage({ params }: { params: Promise<{ slu
                         <div className="space-y-4">
                             <div className="flex items-center justify-between text-sm">
                                 <span className="text-muted-foreground">{t('common.category')}</span>
-                                <span className="font-medium">{category}</span>
+                                <span className="font-medium">{t(`home.labels.categories.${category}`)}</span>
                             </div>
                             <div className="flex items-center justify-between text-sm">
                                 <span className="text-muted-foreground">{t('common.monetization')}</span>
-                                <span className="font-medium">{monetization}</span>
+                                <span className="font-medium">{t(`home.labels.monetization.${monetization}`)}</span>
                             </div>
                             <div className="flex items-center justify-between text-sm">
                                 <span className="text-muted-foreground">{t('common.stage')}</span>
-                                <span className="font-medium">{stage}</span>
+                                <span className="font-medium">{t(`home.labels.stages.${stage}`)}</span>
                             </div>
                             <div className="flex items-center justify-between text-sm">
                                 <span className="text-muted-foreground">{t('common.published')}</span>
@@ -165,11 +165,11 @@ export default async function CaseDetailPage({ params }: { params: Promise<{ slu
 
                         {/* Tags */}
                         <div>
-                            <h4 className="font-medium text-sm mb-3">Tags</h4>
+                            <h4 className="font-medium text-sm mb-3">{t('common.tags')}</h4>
                             <div className="flex flex-wrap gap-2">
                                 {tags.map(tag => (
                                     <Badge key={tag} variant="secondary" className="hover:bg-secondary/80 cursor-pointer font-normal text-muted-foreground">
-                                        {tag}
+                                        {t(`home.labels.tags.${tag}`)}
                                     </Badge>
                                 ))}
                             </div>

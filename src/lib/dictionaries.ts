@@ -47,8 +47,43 @@ export const dictionaries = {
                     illustration: '插画',
                     mobile: '移动端',
                     print: '印刷',
+                    web: '网页设计',
                 }
             },
+            labels: {
+                categories: {
+                    'Enterprise Services': '企业服务',
+                    'Design Tools': '设计工具',
+                    'Content Creation': '内容创作',
+                    'Animation': '动画',
+                    'Branding': '品牌',
+                    'Illustration': '插画',
+                    'Mobile': '移动端',
+                    'Print': '印刷',
+                    'Web': '网页设计',
+                },
+                monetization: {
+                    'Subscription': '订阅制',
+                    'API Billing': 'API调用',
+                    'API-based': 'API调用',
+                    'Freemium': '免费增值',
+                },
+                stages: {
+                    'Profitable': '盈利中',
+                    'Growth': '增长中',
+                    'Validation': '验证中',
+                },
+                tags: {
+                    'Customer Service': '客服',
+                    'SaaS': 'SaaS',
+                    'Subscription': '订阅',
+                    'Design': '设计',
+                    'API': 'API',
+                    'Image': '图像',
+                    'Writing': '写作',
+                    'Content': '内容',
+                }
+            }
         },
         footer: {
             brand: 'AI案例拆解',
@@ -75,6 +110,7 @@ export const dictionaries = {
             monetization: '变现模式',
             stage: '阶段',
             published: '发布日期',
+            tags: '标签',
             share: '分享',
             save: '收藏',
             like: '点赞',
@@ -218,6 +254,39 @@ export const dictionaries = {
                     web: 'Web Design',
                 }
             },
+            labels: {
+                categories: {
+                    '企业服务': 'Enterprise Services',
+                    '设计工具': 'Design Tools',
+                    '内容创作': 'Content Creation',
+                    '动画': 'Animation',
+                    '品牌': 'Branding',
+                    '插画': 'Illustration',
+                    '移动端': 'Mobile',
+                    '印刷': 'Print',
+                    '网页设计': 'Web Design',
+                },
+                monetization: {
+                    '订阅制': 'Subscription',
+                    'API调用': 'API Billing',
+                    '免费增值': 'Freemium',
+                },
+                stages: {
+                    '盈利中': 'Profitable',
+                    '增长中': 'Growth',
+                    '验证中': 'Validation',
+                },
+                tags: {
+                    '客服': 'Customer Service',
+                    'SaaS': 'SaaS',
+                    '订阅': 'Subscription',
+                    '设计': 'Design',
+                    'API': 'API',
+                    '图像': 'Image',
+                    '写作': 'Writing',
+                    '内容': 'Content',
+                }
+            }
         },
         footer: {
             brand: 'AI Projects Analysis',
@@ -244,6 +313,7 @@ export const dictionaries = {
             monetization: 'Monetization',
             stage: 'Stage',
             published: 'Published',
+            tags: 'Tags',
             share: 'Share',
             save: 'Save',
             like: 'Like',

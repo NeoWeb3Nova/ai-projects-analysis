@@ -25,7 +25,7 @@ export function HomeGrid({ cases }: HomeGridProps) {
                         </Button>
                         {['Animation', 'Branding', 'Illustration', 'Mobile', 'Print'].map(cat => (
                             <Button key={cat} variant="ghost" className="rounded-lg h-9 text-sm font-medium px-4 text-muted-foreground hover:text-foreground whitespace-nowrap">
-                                {cat}
+                                {t(`home.labels.categories.${cat}`)}
                             </Button>
                         ))}
                     </div>

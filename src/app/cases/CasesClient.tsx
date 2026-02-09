@@ -83,7 +83,7 @@ export function CasesClient({ initialCases, categories, monetizationTypes }: Cas
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button variant="outline" className="h-10 px-4 rounded-lg border-border bg-background hover:bg-secondary text-foreground font-medium flex items-center gap-2">
-                                    {selectedCategory === ALL_CATEGORIES ? t('home.filters.allCategories') : selectedCategory}
+                                    {selectedCategory === ALL_CATEGORIES ? t('home.filters.allCategories') : t(`home.labels.categories.${selectedCategory}`)}
                                     <ChevronDown className="w-4 h-4 opacity-50" />
                                 </Button>
                             </DropdownMenuTrigger>
@@ -93,7 +93,7 @@ export function CasesClient({ initialCases, categories, monetizationTypes }: Cas
                                 </DropdownMenuItem>
                                 {categories.map(cat => (
                                     <DropdownMenuItem key={cat} onClick={() => setSelectedCategory(cat)}>
-                                        {cat}
+                                        {t(`home.labels.categories.${cat}`)}
                                     </DropdownMenuItem>
                                 ))}
                             </DropdownMenuContent>
@@ -102,7 +102,7 @@ export function CasesClient({ initialCases, categories, monetizationTypes }: Cas
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button variant="ghost" className="h-10 px-4 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary font-medium flex items-center gap-2">
-                                    {selectedMonetization === ALL_MODELS ? t('home.filters.allModels') : selectedMonetization}
+                                    {selectedMonetization === ALL_MODELS ? t('home.filters.allModels') : t(`home.labels.monetization.${selectedMonetization}`)}
                                     <ChevronDown className="w-4 h-4 opacity-50" />
                                 </Button>
                             </DropdownMenuTrigger>
@@ -112,7 +112,7 @@ export function CasesClient({ initialCases, categories, monetizationTypes }: Cas
                                 </DropdownMenuItem>
                                 {monetizationTypes.map(type => (
                                     <DropdownMenuItem key={type} onClick={() => setSelectedMonetization(type)}>
-                                        {type}
+                                        {t(`home.labels.monetization.${type}`)}
                                     </DropdownMenuItem>
                                 ))}
                             </DropdownMenuContent>

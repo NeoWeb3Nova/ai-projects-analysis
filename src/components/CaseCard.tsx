@@ -78,7 +78,7 @@ export function CaseCard({ caseStudy }: CaseCardProps) {
                         {title}
                     </span>
                     <Badge variant="secondary" className="hidden sm:inline-flex text-[10px] h-5 px-1.5 font-normal bg-secondary text-secondary-foreground hover:bg-secondary/80">
-                        {category}
+                        {t(`home.labels.categories.${category}`)}
                     </Badge>
                 </div>
                 <div className="flex items-center gap-3 text-xs text-muted-foreground font-medium">
