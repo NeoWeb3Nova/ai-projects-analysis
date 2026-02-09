@@ -16,7 +16,7 @@ export function HomeGrid({ cases }: HomeGridProps) {
     const { t } = useLanguage();
 
     return (
-        <section className="px-6 pb-20">
+        <section className="px-4 sm:px-6 pb-12 sm:pb-20">
             <div className="max-w-7xl mx-auto">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
                     <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide w-full sm:w-auto">
@@ -36,7 +36,7 @@ export function HomeGrid({ cases }: HomeGridProps) {
                     </Button>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-12">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 md:gap-x-8 gap-y-8 md:gap-y-12">
                     {cases.map((caseStudy) => (
                         <CaseCard key={caseStudy.slug} caseStudy={caseStudy} />
                     ))}

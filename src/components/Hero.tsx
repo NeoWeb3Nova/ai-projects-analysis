@@ -12,7 +12,7 @@ export function Hero({ tags }: HeroProps) {
     const { t } = useLanguage();
 
     return (
-        <section className="relative py-20 px-6 text-center">
+        <section className="relative py-12 sm:py-20 px-4 sm:px-6 text-center">
             <div className="max-w-3xl mx-auto space-y-8">
                 <div className="space-y-4">
                     {/* Simplified title with one translation key, or split if needed. Dictionary has it as one string. */}
@@ -31,7 +31,7 @@ export function Hero({ tags }: HeroProps) {
                         <input
                             type="text"
                             placeholder={t('home.search.placeholder')}
-                            className="w-full h-16 pl-16 pr-6 rounded-full bg-white border border-border shadow-sm text-lg placeholder:text-muted-foreground focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/50 transition-all"
+                            className="w-full h-12 sm:h-16 pl-14 sm:pl-16 pr-6 rounded-full bg-white border border-border shadow-sm text-base sm:text-lg placeholder:text-muted-foreground focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/50 transition-all"
                         />
                     </div>
                 </div>

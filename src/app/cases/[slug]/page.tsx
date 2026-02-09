@@ -58,7 +58,7 @@ export default async function CaseDetailPage({ params }: { params: Promise<{ slu
         <div className="min-h-screen bg-background pb-20">
             {/* Header / Nav Area for Shot */}
             <header className="sticky top-16 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border/40">
-                <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
                     <div className="flex items-center gap-4">
                         <Avatar className="h-10 w-10 border border-border">
                             <AvatarImage src={`https://api.dicebear.com/9.x/notionists/svg?seed=${slug}`} />
@@ -89,13 +89,13 @@ export default async function CaseDetailPage({ params }: { params: Promise<{ slu
                 </div>
             </header>
 
-            <div className="max-w-7xl mx-auto px-6 py-8 md:py-12">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-12">
                 <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-12">
 
                     {/* Main Content (The Shot) */}
                     <main>
                         {/* Visual Asset */}
-                        <div className={`w-full aspect-[4/3] rounded-xl bg-gradient-to-br ${bgGradient} flex items-center justify-center mb-10 shadow-sm border border-border/50 relative overflow-hidden`}>
+                        <div className={`w-full aspect-[4/3] rounded-xl bg-gradient-to-br ${bgGradient} flex items-center justify-center mb-6 sm:mb-10 shadow-sm border border-border/50 relative overflow-hidden`}>
                             {cover ? (
                                 <Image
                                     src={cover}
@@ -195,7 +195,7 @@ export default async function CaseDetailPage({ params }: { params: Promise<{ slu
                             {t('home.grid.viewAll')}
                         </Link>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
                         {relatedCases.map((relatedCase) => (
                             <Link
                                 key={relatedCase.slug}
