@@ -11,6 +11,15 @@ export interface CaseStudy {
     content?: string;
 }
 
+export interface Profile {
+    id: string;
+    email: string;
+    full_name?: string;
+    avatar_url?: string;
+    role?: string;
+    created_at: string;
+}
+
 export interface Bookmark {
     id: string;
     user_id: string;

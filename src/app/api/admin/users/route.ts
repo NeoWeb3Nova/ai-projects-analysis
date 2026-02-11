@@ -22,22 +22,27 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Fetch user count from profiles
-    const { count: usersCount, error: userError } = await supabase
+    const { searchParams } = new URL(request.url);
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '10');
+    const query = searchParams.get('q') || '';
+    const offset = (page - 1) * limit;
+
+    let dbQuery = supabase
         .from('profiles')
-        .select('*', { count: 'exact', head: true });
+        .select('*', { count: 'exact' })
+        .order('created_at', { ascending: false })
+        .range(offset, offset + limit - 1);
 
-    // Fetch cases count
-    const { count: casesCount, error: casesError } = await supabase
-        .from('cases')
-        .select('*', { count: 'exact', head: true });
-
-    if (casesError) {
-        return NextResponse.json({ error: casesError.message }, { status: 500 });
+    if (query) {
+        dbQuery = dbQuery.or(`email.ilike.%${query}%,full_name.ilike.%${query}%`);
     }
 
-    return NextResponse.json({
-        users: usersCount || 0,
-        cases: casesCount || 0
-    });
+    const { data, error, count } = await dbQuery;
+
+    if (error) {
+        return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    return NextResponse.json({ data, count });
 }

@@ -1,18 +1,30 @@
 import { createServerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
+import { UsersTable } from '@/components/admin/UsersTable';
 
 export default async function AdminUsersPage() {
+    const cookieStore = await cookies();
+    const supabase = createServerClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        {
+            cookies: {
+                getAll() {
+                    return cookieStore.getAll();
+                },
+                setAll(cookiesToSet) { }
+            }
+        }
+    );
+
+    const { data: profiles } = await supabase
+        .from('profiles')
+        .select('*')
+        .order('created_at', { ascending: false });
+
     return (
         <div>
-            <h2 className="text-3xl font-heading font-bold mb-6">Users Management</h2>
-            <div className="p-8 border border-dashed border-border rounded-lg text-center">
-                <p className="text-muted-foreground mb-4">
-                    User management requires specific database permissions (Service Role) or a public profiles table, which are not currently configured in this environment.
-                </p>
-                <p className="text-sm text-muted-foreground">
-                    Please configure the Supabase Service Role Key or create a 'profiles' table to enable this feature.
-                </p>
-            </div>
+            <UsersTable initialUsers={profiles || []} />
         </div>
     );
 }
