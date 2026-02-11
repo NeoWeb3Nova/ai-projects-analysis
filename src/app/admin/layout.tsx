@@ -44,9 +44,14 @@ export default async function AdminLayout({
     const adminEmails = process.env.NEXT_PUBLIC_ADMIN_EMAILS?.split(',') || [];
     const userEmail = session.user.email;
 
+    console.log('AdminLayout: User email:', userEmail);
+    console.log('AdminLayout: Admin emails:', adminEmails);
+
     if (!userEmail || !adminEmails.includes(userEmail)) {
+        console.log('AdminLayout: User not authorized, redirecting to home');
         redirect('/');
     }
+    console.log('AdminLayout: Access granted');
 
     return (
         <div className="flex h-screen bg-background">

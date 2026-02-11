@@ -38,16 +38,23 @@ export async function middleware(request: NextRequest) {
 
     // Protect /admin routes
     if (request.nextUrl.pathname.startsWith('/admin')) {
+        console.log('Middleware: Checking admin access for', request.nextUrl.pathname);
         if (!session) {
+            console.log('Middleware: No session found, redirecting to login');
             return NextResponse.redirect(new URL('/auth/login', request.url));
         }
 
         const adminEmails = process.env.NEXT_PUBLIC_ADMIN_EMAILS?.split(',') || [];
         const userEmail = session.user.email;
 
+        console.log('Middleware: User email:', userEmail);
+        console.log('Middleware: Admin emails:', adminEmails);
+
         if (!userEmail || !adminEmails.includes(userEmail)) {
+            console.log('Middleware: User not authorized, redirecting to home');
             return NextResponse.redirect(new URL('/', request.url));
         }
+        console.log('Middleware: Access granted');
     }
 
     return response;
